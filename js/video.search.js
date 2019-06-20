@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let videoName = elem[i]['videoName']
                 let videoDate = elem[i]['videoDate']
                 let websiteName = elem[i]['websiteName']
-                let ageInVideo = parseInt(elem[i]['ageInVideo'])
+                let ageInVideo = elem[i]['ageInVideo']
                 let star = elem[i]['star']
 
                 let category = elem[i]['category']
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 a.href = `video.php?id=${videoID}`
                 a.setAttribute('data-video-id', videoID)
                 a.setAttribute('data-video-date', videoDate)
-                a.setAttribute('data-ageinvideo', ageInVideo.toString())
+                a.setAttribute('data-ageinvideo', ageInVideo)
                 a.setAttribute('data-title', videoName)
                 a.setAttribute('data-star', star)
                 a.setAttribute('data-website', websiteName)

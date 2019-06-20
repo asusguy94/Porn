@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.duration = document.getElementById('duration').textContent
     window.videoTitle = document.getElementById('video-name')
 
-    legacyBookmarks = true // use old bookmark visuals
-
     document.addEventListener('keydown', function (e) {
         if (e.keyCode === 9) {
             e.preventDefault()
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         }
 
-        if(seconds) videoPlayer.currentTime = seconds
+        if (seconds) videoPlayer.currentTime = seconds
         if (typeof localStorage.playing !== 'undefined' && localStorage.playing === "1") {
             setTimeout(function () {
                 videoPlayer.play()
@@ -65,72 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
         'hideControls': false // never hide controls
     })
 
-    /** Chapter Marker **/
-    /*if (!legacyBookmarks) {
-        // Create Existing
-        for (let i = 0; i < bookmark.length; i++) {
-            let seconds = bookmark[i].getAttribute('data-bookmark-time');
-            createChapterMarker(seconds);
-        }
-
-        // Create existing
-        for (let i = 0, chapterMarkers = document.getElementsByClassName('chapter'); i < chapterMarkers.length; i++) {
-            let timeout = [];
-            chapterMarkers[i].addEventListener('mouseenter', mouseEnter);
-            chapterMarkers[i].addEventListener('mouseleave', mouseLeave);
-            chapterMarkers[i].addEventListener('click', mouseClick);
-
-            bookmark[i].addEventListener('mouseenter', function () {
-                if (bookmark[i].classList.contains('active')) mouseEnter();
-            });
-            bookmark[i].addEventListener('mouseleave', mouseLeave);
-
-            function mouseEnter() {
-                clearTimeout(timeout[i]);
-                bookmark[i].classList.add('active');
-            }
-
-            function mouseLeave() {
-                timeout[i] = setTimeout(function () {
-                    bookmark[i].classList.remove('active');
-                }, 600);
-            }
-
-            function mouseClick() {
-                $(bookmark)[i].click();
-            }
-        }
-    }*/
-    /** Chapter Marker **/
-
     videoWrapper.addEventListener('wheel', function (e) {
         let speed = 10
         if (e.deltaY < 0) skip(speed)
         else rewind(speed)
     })
-
-    /*videoPlayer.addEventListener('loadedmetadata', function () {
-        let track = this.addTextTrack('chapters', 'Bookmarks', 'en');
-        track.mode = 'showing';
-
-        track.addCue(new VTTCue(0, 12, "First"));
-        track.addCue(new VTTCue(18.7, 21.5, "Second"));
-        track.addCue(new VTTCue(22.8, 26.8, "Third"));
-
-        let progressBar = document.createElement('span');
-        progressBar.classList.add('progress-bookmarks');
-        progressBar.textContent = 'progress';
-        $('progress').first().before(progressBar);
-
-        const c = videoPlayer.textTracks[0].cues;
-        for (let i = 0; i < c.length; i++) {
-            let s = document.createElement("span");
-            //s.innerHTML = c[i].text;
-            s.setAttribute('data-start', c[i].startTime);
-            console.log(s);
-            progressBar.appendChild(s);
-        }
-    });*/
 
     videoPlayer.addEventListener('timeupdate', function () {
         localStorage.bookmark = Math.round(videoPlayer.currentTime)
@@ -219,7 +156,13 @@ function addPlay() {
     let arguments = `videoID=${videoID}`
     ajax('ajax/video_addplay.php', arguments, function () {
         console.log('play added')
-        return
+    })
+}
+
+function fixDate() {
+    ajax('ajax/fix_date.php', `videoID=${videoID}`, (data) => {
+        let dateEl = document.getElementsByClassName('date')[0];
+        dateEl.textContent = data.responseText;
     })
 }
 
@@ -228,7 +171,10 @@ function addLocation(locationID) {
 }
 
 function removeLocation(locationID) {
-    ajax('ajax/remove_videolocation.php', `videoID=${videoID}&locationID=${locationID}`)
+    ajax('ajax/remove_videolocation.php', `videoID=${videoID}&locationID=${locationID}`, () => {
+        let locationEl = document.querySelector(`.location[data-location-id="${locationID}"]`);
+        locationEl.remove();
+    })
 }
 
 function addAttribute(attributeID) {
@@ -236,7 +182,10 @@ function addAttribute(attributeID) {
 }
 
 function removeAttribute(attributeID) {
-    ajax('ajax/remove_videoattribute.php', `videoID=${videoID}&attributeID=${attributeID}`)
+    ajax('ajax/remove_videoattribute.php', `videoID=${videoID}&attributeID=${attributeID}`, () => {
+        let attributeEl = document.querySelector(`.attribute[data-attribute-id="${attributeID}"]`);
+        attributeEl.remove();
+    })
 }
 
 function renameVideo(videoName) {
@@ -272,7 +221,6 @@ function addBookmark(categoryID, categoryName) {
             a.textContent = categoryName
 
             wrapper.appendChild(a)
-            // createChapterMarker(seconds);
         }
 
         animation('checkbox.png')
@@ -366,7 +314,6 @@ function addCategory_and_bookmark(categoryID, categoryName) {
             a.textContent = categoryName
 
             wrapper.appendChild(a)
-            //createChapterMarker(seconds);
         }
 
         animation('checkbox.png')
@@ -408,7 +355,7 @@ function ajax(page, params, callback = function () {
 /* Title */
 $(function () {
     $.contextMenu({
-        selector: '#video > h2 #video-name',
+        selector: '#video > #video-title > #video-name',
         items: {
             'rename_title': {
                 name: 'Rename',
@@ -812,10 +759,25 @@ $(function () {
         }
     })
 })
+/* Date */
+$(function () {
+    $.contextMenu({
+        selector: '#video .date',
+        items: {
+            'update_date': {
+                name: 'Fix Date',
+                icon: 'fas fa-sync-alt',
+                callback: function () {
+                    fixDate()
+                }
+            }
+        }
+    })
+})
 /* Attribute */
 $(function () {
     $.contextMenu({
-        selector: '#video > h2 small > span.attribute',
+        selector: '#video .attribute',
         items: {
             'remove_attribute': {
                 name: 'Remove Attribute',
@@ -832,7 +794,7 @@ $(function () {
 /* Location */
 $(function () {
     $.contextMenu({
-        selector: '#video > h2 small > span.location',
+        selector: '#video .location',
         items: {
             'remove_location': {
                 name: 'Remove Location',
@@ -888,7 +850,7 @@ function hasNoBookmarks() {
 /* Bookmark Collision Check */
 function collisionCheck(firstElement, secondElement) {
     const distance_min = {
-        x: 5,
+        x: 7,
         y: 35
     }
 
@@ -960,8 +922,8 @@ function onFocus(callback) {
         callback()
     } else {
         $(window).focus(function () {
-            callback();
-        });
+            callback()
+        })
     }
 }
 
@@ -1023,50 +985,4 @@ function windowResize(callback) {
             callback()
         }, 100)
     })
-}
-
-function createChapterMarker(seconds) {
-    if (!initChapterContainer()) {
-        setTimeout(function () {
-            createChapterMarker(seconds)
-        }, 100)
-    } else {
-        let chapterMarker = document.createElement('div')
-        chapterMarker.classList.add('chapter')
-        chapterMarker.style.left = `${getOffset(seconds)}%`
-        initChapterContainer().appendChild(chapterMarker)
-
-        chapterMarker.addEventListener('mouseenter', mouseEnter)
-        chapterMarker.addEventListener('mouseleave', mouseLeave)
-        chapterMarker.addEventListener('click', mouseClick)
-
-        let timeout, currentBookmark = document.querySelector(`.bookmark[data-bookmark-time="${seconds}"]`)
-        currentBookmark.addEventListener('mouseenter', function () {
-            if (currentBookmark.classList.contains('active')) mouseEnter()
-        })
-        currentBookmark.addEventListener('mouseleave', mouseLeave)
-
-        function mouseEnter() {
-            clearTimeout(timeout)
-            currentBookmark.classList.add('active')
-        }
-
-        function mouseLeave() {
-            timeout = setTimeout(function () {
-                currentBookmark.classList.remove('active')
-            }, 600)
-        }
-
-        function mouseClick() {
-            currentBookmark.click()
-        }
-    }
-}
-
-function initChapterContainer() {
-    return document.getElementById('chapter-container')
-}
-
-String.prototype.isUpperCase = function () {
-    return this.valueOf().toUpperCase() === this.valueOf()
 }

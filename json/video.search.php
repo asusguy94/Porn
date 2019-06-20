@@ -33,15 +33,15 @@ for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $lo
 	$ageInVideo = $result[$i]->ageinvideo;
 	$ageInVideo_alt = $result[$i]->starAge;
 
-	if(!$ageInVideo){
-		if(!is_null($ageInVideo_alt)) $ageInVideo = $ageInVideo_alt;
+	if (!$ageInVideo) {
+		if (!is_null($ageInVideo_alt)) $ageInVideo = $ageInVideo_alt * 365;
 		else $ageInVideo = 0;
 	}
 
 	/* Array */
-	$categoryName	= $result[$i]->categoryName;
-	$attributeName	= $result[$i]->attributeName;
-	$locationName	= $result[$i]->locationName;
+	$categoryName = $result[$i]->categoryName;
+	$attributeName = $result[$i]->attributeName;
+	$locationName = $result[$i]->locationName;
 
 
 	/* Duplicate Check */
@@ -68,8 +68,8 @@ for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $lo
 		if (basic::file_exists($thumbnail)) print '"md5": "' . md5_file("$thumbnail") . '",';
 		else print '"md5": "0",';
 
-		/*if (basic::file_exists($video)) print '"existing": "1",';
-		else print '"existing": "0",';*/
+		//if (basic::file_exists($video)) print '"existing": "1",';
+		//else print '"existing": "0",';
 		print '"existing": "1",';
 	}
 
@@ -123,7 +123,7 @@ for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $lo
 		if ($i < $len - 1) print '},';
 		else print '}';
 
-		/* RESETS */
+		// RESETS
 		$category_arr = [];
 		$attribute_arr = [];
 		$location_arr = [];

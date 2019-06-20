@@ -2104,7 +2104,9 @@ class Video
 		} else {
 			$result = $query->fetch();
 
-			$date = date("j F Y", strtotime($result['date']));
+			$date_class = new Date();
+			$date = $date_class->parse($result['date']);
+
 			$name = htmlentities($result['name']);
 			$wsite = $this->getWebsite($result['id']);
 			$site = $this->getSite($result['id']);
@@ -2500,6 +2502,10 @@ class Date
 		if (!is_numeric($days) || is_null($days)) return false;
 		$years = floor($days / 365);
 		return $years;
+	}
+
+	function parse($dateStr){
+		return date("j F Y", strtotime($dateStr));
 	}
 }
 
