@@ -1,14 +1,12 @@
 # Welcome
-This is a project I'm using for an automated system of organizing my porn. Import **database.sql** with phpmyadmin to create the database and tables.
-
 ## Some information about the system
 - The program is built on **HTML, PHP, MySQL & JavaScript**, so to use it you either have to run a local server or if you have another computer you could run the server from there
-  - I'm running the server on a NAS...so any computer should be able to outperform my setup.
-- The program is dependent on some libraries/files, but all of them should be within this repository
+  - I'm running the server on a NAS...so most computers should be able to outperform my setup
+- The program is dependent on some libraries/files, look under [Installation](#installation) for instructions on how to install them
 - The program is heavily dependent on the structure of the files/folders, for more info check the [Wiki](../../wiki)
 - This project is **early in development**
 - If anyone needs help with anything regarding the project, don't hesitate to ask!
-- This project is loosely based on a Windows app, if you want to try that one here [Pornganizer](https://pornganizer.org)
+- This project is loosely based on a windows app called [Pornganizer](https://pornganizer.org)
   - This project uses some of the functionality similar to that program, but with a lot of folder/file automation.
 - I also have another version of this project for a hentai-version of this organizer, if that is something that anyone wants to use as well, I can upload that too.
 - Any help is appreciated...also with GitHub, as I'm quite new to the platform
@@ -18,25 +16,27 @@ This is a project I'm using for an automated system of organizing my porn. Impor
   - **Linux**: LAMP
   - **WindowsXP**: XAMP
   - **Windows**: WAMP
+  - **Mac**: MAMP
+  - It is possible to run this app without either of these, but you need to have Apache, MySQL, and PHP configured in order for the system to work
 - **Modern Web browser**: Chrome, Chromium, Firefox, etc..
 - **Database name**: insert it into ```_class.php``` (or use default)
 - **Database username**: insert into ```_class.php``` (or use default)
+	- You will need to add a new user with that info in MySQL
 - **Database password**: insert into ```_class.php``` (or use default)
+	- You will need to add a new user with that info in MySQL
 - If you want the DB-link in the navbar to work, you need to install phpmyadmin and move its install folder to phpMyAdmin inside the project folder
 
 
-## Release vs Clone
-There are 2 ways to use this project
-- Download a release (stable but not often updated)
-- Clone the project (latest features and updated often)
-  - If you choose to clone the project you will need to do one more thing in order to use the project
-   1. Install [Node.JS](https://nodejs.org/)
-   2. Open the terminal of choice and CD into where you downloaded/cloned the directory to
-      - If you downloaded the file to `C:/downloads`, you can run `CD C:/downloads/porn-organizer`
-   4. Type `npm install` to download the required files.
-   3. Type `gulp` to compile the nesseary files.
+## Installation
+1. Clone/download the project
+1. Install [Node.JS](https://nodejs.org/)
+2. Open the terminal of choice and CD into where you downloaded/cloned the project to
+   - If you downloaded the file to `C:/downloads`, you can run `CD C:/downloads/porn-organizer`
+4. Type `npm install -global gulp-cli` to install the required command line utility
+5. Type `npm install` to download the required files
+6. Type `gulp` to compile the necessary files
 
 ## TODO
-- [ ] Implement Bootstap 4
+- [ ] Implement Bootstrap 4
 - [ ] Video-page bookmark-visuals are broken on smaller devices
-- [x] Upload .SQL file for project
+- [ ] Upload .SQL file for project

@@ -153,8 +153,7 @@ function playFrom(seconds) {
 }
 
 function addPlay() {
-    let arguments = `videoID=${videoID}`
-    ajax('ajax/video_addplay.php', arguments, function () {
+    ajax('ajax/video_addplay.php', `videoID=${videoID}`, function () {
         console.log('play added')
     })
 }

@@ -26,7 +26,6 @@
     "gulp-clean-css": "^4.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-terser": "^1.1.7",
     "gulp-uglify-es": "^1.0.4",
     "hls.js": "^0.12.4",
     "jquery": "^3.4.1",
