@@ -2,13 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
     window.videoWrapper = document.getElementById('video')
     window.videoPlayer = document.getElementsByTagName('video')[0]
     window.videoSource = document.querySelector('source[type="application/x-mpegURL"]')
-    window.videoID = window.location.href.split('id=')[1]
-    window.videoHeight = 500
+    window.videoID = new URL(location.href).searchParams.get('id')
     window.seekTime = 1
 
     window.vtt_source = `vtt/${videoID}.vtt`
     window.bookmark = document.getElementsByClassName('bookmark')
-    window.duration = document.getElementById('duration').textContent
     window.videoTitle = document.getElementById('video-name')
 
     document.addEventListener('keydown', function (e) {
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (seconds) videoPlayer.currentTime = seconds
-        if (typeof localStorage.playing !== 'undefined' && localStorage.playing === "1") {
+        if (localStorage.playing === "1") {
             setTimeout(function () {
                 videoPlayer.play()
             }, 100)
@@ -64,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     videoWrapper.addEventListener('wheel', function (e) {
+        e.preventDefault()
+
         let speed = 10
         if (e.deltaY < 0) skip(speed)
         else rewind(speed)
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     $(bookmark).on('click', function () {
-        playFrom($(this).attr('data-bookmark-time'))
+        playFrom(this.getAttribute('data-bookmark-time'))
     })
 
     autoComplete()
@@ -90,10 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     onFocus(videoStats)
     onFocus(bookmarkCollision)
-
-    windowResize(function () {
-        bookmarkCollision()
-    })
 })
 
 document.onkeydown = checkKey
@@ -160,8 +156,8 @@ function addPlay() {
 
 function fixDate() {
     ajax('ajax/fix_date.php', `videoID=${videoID}`, (data) => {
-        let dateEl = document.getElementsByClassName('date')[0];
-        dateEl.textContent = data.responseText;
+        let dateEl = document.getElementsByClassName('date')[0]
+        dateEl.textContent = data.responseText
     })
 }
 
@@ -171,8 +167,8 @@ function addLocation(locationID) {
 
 function removeLocation(locationID) {
     ajax('ajax/remove_videolocation.php', `videoID=${videoID}&locationID=${locationID}`, () => {
-        let locationEl = document.querySelector(`.location[data-location-id="${locationID}"]`);
-        locationEl.remove();
+        let locationEl = document.querySelector(`.location[data-location-id="${locationID}"]`)
+        locationEl.remove()
     })
 }
 
@@ -182,8 +178,8 @@ function addAttribute(attributeID) {
 
 function removeAttribute(attributeID) {
     ajax('ajax/remove_videoattribute.php', `videoID=${videoID}&attributeID=${attributeID}`, () => {
-        let attributeEl = document.querySelector(`.attribute[data-attribute-id="${attributeID}"]`);
-        attributeEl.remove();
+        let attributeEl = document.querySelector(`.attribute[data-attribute-id="${attributeID}"]`)
+        attributeEl.remove()
     })
 }
 
@@ -950,7 +946,7 @@ function videoVolume(level = 1) {
 }
 
 function getOffset(start) {
-    const offset_decimal = start / duration
+    const offset_decimal = start / videoPlayer.duration
     const offset_mx = 1.01
 
     let offset = offset_decimal * 100
@@ -974,14 +970,4 @@ function animation(src, duration_start = 300, duration_end = duration_start) {
 
 function insertBefore(parentNode, newNode) {
     parentNode.insertBefore(newNode, parentNode.firstChild)
-}
-
-function windowResize(callback) {
-    let resizeEvt
-    window.addEventListener('resize', function () {
-        clearInterval(resizeEvt)
-        resizeEvt = setTimeout(function () {
-            callback()
-        }, 100)
-    })
 }
