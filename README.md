@@ -29,12 +29,24 @@
 
 ## Installation
 1. Clone/download the project
-1. Install [Node.JS](https://nodejs.org/)
-2. Open the terminal of choice and CD into where you downloaded/cloned the project to
+2. Install [Node.JS](https://nodejs.org/)
+3. Open the terminal of choice and CD into where you downloaded/cloned the project to
    - If you downloaded the file to `C:/downloads`, you can run `CD C:/downloads/porn-organizer`
 4. Type `npm install -global gulp-cli` to install the required command line utility
 5. Type `npm install` to download the required files
 6. Type `gulp` to compile the necessary files
+
+## Upgrade dependencies
+If you have been using this project for a while, after some time the dependencies might become outdated.
+1. Open the terminal of choice and CD into your working project eg `CD C:/downloads/porn-organizer`
+2. Type `npm update` to refresh the dependencies
+
+Usually doing this is not necessary, but if you've updated the project from a new commit you should always run the following commands
+```
+npm install
+npm update
+```
+This will install any new packages added to the project & update any existing packages to the latest version
 
 ## TODO
 - [ ] Implement Bootstrap 4
