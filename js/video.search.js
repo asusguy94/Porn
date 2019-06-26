@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const elem = data['videos']
             for (let i = 0; i < elem.length; i++) {
-                let md5 = elem[i]['md5']
                 let thumbnail = elem[i]['thumbnail']
 
                 let existing = elem[i]['existing']
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let img = document.createElement('img')
                 img.classList.add('lazy', 'card-img-top')
-                img.setAttribute('data-src', `${thumbnail}?v=${md5}`)
+                img.setAttribute('data-src', thumbnail)
 
                 let span = document.createElement('span')
                 span.classList.add('title', 'card-title')

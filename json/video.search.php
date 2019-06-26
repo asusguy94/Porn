@@ -58,18 +58,12 @@ for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $lo
 
 		print "\"videoID\": $videoID,";
 		print "\"videoName\": \"" . str_replace('"', '\\"', $videoName) . "\",";
-		//print "\"videoName\": \"" . str_replace('"', '\\"', str_replace('=', '\\=', $videoName)) . "\",";
 		print "\"videoDate\": \"$videoDate\",";
 		print "\"star\": \"$star\",";
 		print "\"websiteName\": \"$websiteName\",";
 		print "\"ageInVideo\": \"$ageInVideo\",";
 		print "\"thumbnail\": \"$thumbnail\",";
 
-		if (basic::file_exists($thumbnail)) print '"md5": "' . md5_file("$thumbnail") . '",';
-		else print '"md5": "0",';
-
-		//if (basic::file_exists($video)) print '"existing": "1",';
-		//else print '"existing": "0",';
 		print '"existing": "1",';
 	}
 
