@@ -878,25 +878,33 @@ function bookmarkCollision() {
     bookmarkSort()
 
     $(bookmark).attr('data-level', 1)
-    for (let i = 0; i < bookmark.length; i++) {
+    for (let i = 1; i < bookmark.length; i++) {
         let level = $(bookmark).eq(i).attr('data-level')
 
-        if (i) {
-            let first = bookmark[i - 1]
-            let second = bookmark[i];
+        let first = bookmark[i - 1]
+        let second = bookmark[i];
 
-            (function addSpace() {
-                setTimeout(function () {
-                    if (collisionCheck(first, second)) {
-                        if (level < 10) level = ++level
-                        else level = 1
-
-                        $(bookmark).eq(i).attr('data-level', level)
-                        addSpace()
+        (function addSpace() {
+            setTimeout(function () {
+                let collision = false
+                if (collisionCheck(first, second)) {
+                    collision = true
+                } else {
+                    for (let j = 1; j < i; j++) {
+                        first = bookmark[j - 1]
+                        if (collisionCheck(first, second)) collision = true
                     }
-                }, 250)
-            })()
-        }
+                }
+
+                if (collision) {
+                    if (level < 10) level++
+                    else level = 1
+
+                    $(bookmark).eq(i).attr('data-level', level)
+                    addSpace()
+                }
+            }, 150)
+        })()
     }
 }
 
