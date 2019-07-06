@@ -72,10 +72,10 @@ This app requires a database to function properly, I recomend using [phpMyAdmin]
 	- Find the line that says `define('DB_PORT', '3307')` and replace `'3307'` with the port number of your sql_driver
     	- It is usually `3307` for MariaDB and `3306` for MySQL
     - Find the line that says `define('DB_USER', 'porn.web_user')` and replace `'porn.web_user'` with your username
-    	- If you have a username `'private_user'`, the line should be `define('DB', 'private_user')`
+    	- If you have a username `'private_user'`, the line should be `define('DB_USER', 'private_user')`
     	- You can also use `'root'` as a username
     - Find the line that says `define('DB_PASS', 'Qnn3ANukory20UAQ')` and replace `'Qnn3ANukory20UAQ'` with your password
-        - If have a password `'private_pass'`, the line should be `define('DB', 'private_pass')`
+        - If have a password `'private_pass'`, the line should be `define('DB_PASS', 'private_pass')`
         - You can also use `''` as a password, if you used `'root'` as a username
 6. Save the file
 
