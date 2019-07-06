@@ -149,53 +149,79 @@ function playFrom(seconds) {
 }
 
 function addPlay() {
-    ajax('ajax/video_addplay.php', `videoID=${videoID}`, function () {
+    ajax('ajax/video_addplay.php', [
+        {'videoID': videoID}
+    ], () => {
         console.log('play added')
     })
 }
 
 function fixDate() {
-    ajax('ajax/fix_date.php', `videoID=${videoID}`, (data) => {
+    ajax('ajax/fix_date.php', [
+        {'videoID': videoID}
+    ], (data) => {
         let dateEl = document.getElementsByClassName('date')[0]
         dateEl.textContent = data.responseText
     })
 }
 
 function addLocation(locationID) {
-    ajax('ajax/add_videolocation.php', `videoID=${videoID}&locationID=${locationID}`)
+    ajax('ajax/add_videolocation.php', [
+        {'videoID': videoID},
+        {'locationID': locationID}
+    ])
 }
 
 function removeLocation(locationID) {
-    ajax('ajax/remove_videolocation.php', `videoID=${videoID}&locationID=${locationID}`, () => {
+    ajax('ajax/remove_videolocation.php', [
+        {'videoID': videoID},
+        {'locationID': locationID}
+    ], () => {
         let locationEl = document.querySelector(`.location[data-location-id="${locationID}"]`)
         locationEl.remove()
     })
 }
 
 function addAttribute(attributeID) {
-    ajax('ajax/add_videoattribute.php', `videoID=${videoID}&attributeID=${attributeID}`)
+    ajax('ajax/add_videoattribute.php', [
+        {'videoID': videoID},
+        {'attributeID': attributeID}
+    ])
 }
 
 function removeAttribute(attributeID) {
-    ajax('ajax/remove_videoattribute.php', `videoID=${videoID}&attributeID=${attributeID}`, () => {
+    ajax('ajax/remove_videoattribute.php', [
+        {'videoID': videoID},
+        {'attributeID': attributeID}
+    ], () => {
         let attributeEl = document.querySelector(`.attribute[data-attribute-id="${attributeID}"]`)
         attributeEl.remove()
     })
 }
 
 function renameVideo(videoName) {
-    ajax('ajax/rename_video.php', `videoID=${videoID}&videoName=${encodeURIComponent(videoName)}`)
+    ajax('ajax/rename_video.php', [
+        {'videoID': videoID},
+        {'videoName': encodeURIComponent(videoName)}
+    ])
 }
 
 function renameFile(videoPath) {
-    ajax('ajax/rename_file.php', `videoID=${videoID}&videoPath=${encodeURIComponent(videoPath)}`)
+    ajax('ajax/rename_file.php', [
+        {'videoID': videoID},
+        {'videoPath': encodeURIComponent(videoPath)}
+    ])
 }
 
 function addBookmark(categoryID, categoryName) {
     let seconds = Math.round(videoPlayer.currentTime)
     localStorage.bookmark = seconds
 
-    ajax('ajax/add_bookmark.php', `seconds=${seconds}&categoryID=${categoryID}&videoID=${videoID}`, function (data) {
+    ajax('ajax/add_bookmark.php', [
+        {'seconds': seconds},
+        {'categoryID': categoryID},
+        {'videoID': videoID}
+    ], (data) => {
         if (!$('#timeline').length) {
             let div = document.createElement('div')
             div.id = 'timeline'
@@ -229,14 +255,20 @@ function addBookmark(categoryID, categoryName) {
 }
 
 function bookmark_editCategory(bookmarkID, categoryID) {
-    ajax('ajax/bookmark_editCategory.php', `bookmarkID=${bookmarkID}&categoryID=${categoryID}`)
+    ajax('ajax/bookmark_editCategory.php', [
+        {'bookmarkID': bookmarkID},
+        {'categoryID': categoryID}
+    ])
 }
 
 function bookmark_editTime(bookmarkID) {
     let seconds = Math.round(videoPlayer.currentTime)
     localStorage.bookmark = seconds
 
-    ajax('ajax/bookmark_editTime.php', `bookmarkID=${bookmarkID}&seconds=${seconds}`, function () {
+    ajax('ajax/bookmark_editTime.php', [
+        {'bookmarkID': bookmarkID},
+        {'seconds': seconds}
+    ], () => {
         let btn = document.querySelector(`.bookmark[data-bookmark-id="${bookmarkID}"]`)
         btn.style.marginLeft = `${getOffset(seconds)}%`
         btn.setAttribute('data-bookmark-time', seconds.toString())
@@ -248,19 +280,29 @@ function bookmark_editTime(bookmarkID) {
 }
 
 function removeBookmark(id) {
-    ajax('ajax/remove_bookmark.php', `id=${id}`)
+    ajax('ajax/remove_bookmark.php', [
+        {'id': id}
+    ])
 }
 
 function removeBookmarks() {
-    ajax('ajax/remove_bookmarks.php', `videoID=${videoID}`)
+    ajax('ajax/remove_bookmarks.php', [
+        {'videoID': videoID}
+    ])
 }
 
 function removeVideoCategory(videoID, categoryID) {
-    ajax('ajax/remove_videocategory.php', `videoID=${videoID}&categoryID=${categoryID}`)
+    ajax('ajax/remove_videocategory.php', [
+        {'videoID': videoID},
+        {'categoryID': categoryID}
+    ])
 }
 
 function removeVideoStar(videoID, starID) {
-    ajax('ajax/remove_videostar.php', `videoID=${videoID}&starID=${starID}`)
+    ajax('ajax/remove_videostar.php', [
+        {'videoID': videoID},
+        {'starID': starID}
+    ])
 }
 
 function addCategory_and_bookmark(categoryID, categoryName) {
@@ -269,7 +311,11 @@ function addCategory_and_bookmark(categoryID, categoryName) {
     let seconds = Math.round(videoPlayer.currentTime)
     localStorage.bookmark = seconds
 
-    ajax('ajax/add_category_and_bookmark.php', `videoID=${videoID}&categoryID=${categoryID}&seconds=${seconds}`, function (data) {
+    ajax('ajax/add_category_and_bookmark.php', [
+        {'videoID': videoID},
+        {'categoryID': categoryID},
+        {'seconds': seconds}
+    ], (data) => {
         if (!$('#timeline').length) {
             let div = document.createElement('div')
             div.id = 'timeline'
@@ -322,27 +368,47 @@ function addCategory_and_bookmark(categoryID, categoryName) {
 }
 
 function generateThumbnail() {
-    ajax('ajax/video_generatethumbnail.php', `videoID=${videoID}`)
+    ajax('ajax/video_generatethumbnail.php',
+        {'videoID': videoID}
+    )
 }
 
 function removeVideo() {
-    ajax('ajax/remove_video.php', `videoID=${videoID}`)
+    ajax('ajax/remove_video.php', [
+        {'videoID': videoID}
+    ])
 }
 
 function setAge(age) {
-    ajax('ajax/video_age.php', `videoID=${videoID}&age=${age}`)
+    ajax('ajax/video_age.php', [
+        {'videoID': videoID},
+        {'age': age}
+    ])
 }
 
-function ajax(page, params, callback = function () {
-    location.href = location.href
+function ajax(url, params, callback = function () {
+    location.href = `${location.href}`
 }) {
-    let url = `${page}?${params}`
-
     let xhr = new XMLHttpRequest()
-    xhr.open('GET', url)
-    xhr.send()
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) callback(this)
+    xhr.open('POST', url)
+
+    if (params.length) {
+        let data = new FormData()
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i]
+
+            let key = Object.keys(param)[0]
+            let val = param[key]
+
+            data.append(key, val)
+        }
+        xhr.send(data)
+    } else {
+        xhr.send()
+    }
+
+    xhr.onload = function () {
+        callback(this)
     }
 }
 
@@ -379,9 +445,7 @@ $(function () {
 
                         dialogQuery.append(dialogInput)
                         let input = $('input[name="videoName_edit"]')
-                        let len = input.val().length
                         input[0].focus()
-                        input[0].setSelectionRange(len, len)
 
                         document.querySelector('input[name="videoName_edit"]').addEventListener('keydown', function (e) {
                             if (e.keyCode === 13) {
@@ -478,7 +542,17 @@ $(function () {
                         categorySearch()
                     })
                 }
+            }, 'divider': '---',
+            'copy_title': {
+                name: 'Copy',
+                icon: 'copy',
+                callback: function (itemKey, options) {
+                    let data = options.$trigger.text()
+
+                    setClipboard(data)
+                }
             }
+
         }
     })
 })
@@ -715,9 +789,7 @@ $(function () {
 
                         dialogQuery.append(dialogInput)
                         let input = $('input[name="videoFile_edit"]')
-                        let len = input.val().length
                         input[0].focus()
-                        input[0].setSelectionRange(len, len)
 
                         document.querySelector('input[name="videoFile_edit"]').addEventListener('keydown', function (e) {
                             if (e.keyCode === 13) {
@@ -903,7 +975,7 @@ function bookmarkCollision() {
                     $(bookmark).eq(i).attr('data-level', level)
                     addSpace()
                 }
-            }, 150)
+            }, 250)
         })()
     }
 }
@@ -978,4 +1050,18 @@ function animation(src, duration_start = 300, duration_end = duration_start) {
 
 function insertBefore(parentNode, newNode) {
     parentNode.insertBefore(newNode, parentNode.firstChild)
+}
+
+function setClipboard(data) {
+    const el = document.createElement("textarea")
+
+    el.value = data
+    el.setAttribute("readonly", "")
+    el.style.position = "absolute"
+    el.style.left = "-9999px"
+
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand("copy")
+    document.body.removeChild(el)
 }

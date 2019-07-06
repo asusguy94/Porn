@@ -1,11 +1,11 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['seconds']) && isset($_GET['categoryID']) && isset($_GET['videoID'])) {
-	if (!empty($_GET['seconds']) && !empty($_GET['categoryID']) && !empty($_GET['videoID'])) {
-		$seconds = $_GET['seconds'];
-		$categoryID = $_GET['categoryID'];
-		$videoID = $_GET['videoID'];
+if (isset($_POST['seconds']) && isset($_POST['categoryID']) && isset($_POST['videoID'])) {
+	if (!empty($_POST['seconds']) && !empty($_POST['categoryID']) && !empty($_POST['videoID'])) {
+		$seconds = $_POST['seconds'];
+		$categoryID = $_POST['categoryID'];
+		$videoID = $_POST['videoID'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT id FROM bookmarks WHERE videoID = ? AND categoryID = ? AND start = ? LIMIT 1");

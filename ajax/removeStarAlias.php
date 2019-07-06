@@ -1,9 +1,9 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['aliasID'])) {
-	if (!empty($_GET['aliasID'])) {
-		$aliasID = $_GET['aliasID'];
+if (isset($_POST['aliasID'])) {
+	if (!empty($_POST['aliasID'])) {
+		$aliasID = $_POST['aliasID'];
 
 		global $pdo;
 		$query = $pdo->prepare("DELETE FROM staralias WHERE id = ?");

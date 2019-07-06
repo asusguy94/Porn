@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['videoID']) && isset($_GET['age'])) {
-	if (!empty($_GET['videoID']) && !empty($_GET['age'])) {
-		$videoID = $_GET['videoID'];
-		$age = $_GET['age'];
+if (isset($_POST['videoID']) && isset($_POST['age'])) {
+	if (!empty($_POST['videoID']) && !empty($_POST['age'])) {
+		$videoID = $_POST['videoID'];
+		$age = $_POST['age'];
 
 		global $pdo;
 		$query = $pdo->prepare("UPDATE videos SET starAge = ? WHERE id = ?");

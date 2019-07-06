@@ -1,11 +1,11 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['videoID']) && isset($_GET['categoryID']) && isset($_GET['seconds'])) {
-	if (!empty($_GET['videoID']) && !empty($_GET['categoryID']) && !empty($_GET['seconds'])) {
-		$videoID = $_GET['videoID'];
-		$categoryID = $_GET['categoryID'];
-		$seconds = $_GET['seconds'];
+if (isset($_POST['videoID']) && isset($_POST['categoryID']) && isset($_POST['seconds'])) {
+	if (!empty($_POST['videoID']) && !empty($_POST['categoryID']) && !empty($_POST['seconds'])) {
+		$videoID = $_POST['videoID'];
+		$categoryID = $_POST['categoryID'];
+		$seconds = $_POST['seconds'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT id FROM videocategories WHERE videoID = ? AND categoryID = ? LIMIT 1");

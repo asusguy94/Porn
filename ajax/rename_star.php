@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['starID']) && isset($_GET['starName'])) {
-	if (!empty($_GET['starID']) && !empty($_GET['starName'])) {
-		$starID = $_GET['starID'];
-		$starName = $_GET['starName'];
+if (isset($_POST['starID']) && isset($_POST['starName'])) {
+	if (!empty($_POST['starID']) && !empty($_POST['starName'])) {
+		$starID = $_POST['starID'];
+		$starName = $_POST['starName'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT id FROM stars WHERE name = ?");

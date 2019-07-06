@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['aliasID']) && isset($_GET['starID'])) {
-	if (!empty($_GET['aliasID']) && !empty($_GET['starID'])) {
-		$starID = $_GET['starID'];
-		$aliasID = $_GET['aliasID'];
+if (isset($_POST['aliasID']) && isset($_POST['starID'])) {
+	if (!empty($_POST['aliasID']) && !empty($_POST['starID'])) {
+		$starID = $_POST['starID'];
+		$aliasID = $_POST['aliasID'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT name FROM staralias WHERE id = :aliasID LIMIT 1");

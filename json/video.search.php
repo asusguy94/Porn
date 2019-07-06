@@ -3,12 +3,17 @@ include('../_class.php');
 
 global $pdo;
 $sql = "
-            SELECT videos.id AS videoID, videos.starAge, videos.path, videos.name AS videoName, videos.date AS videoDate, stars.name AS star, datediff(videos.date, stars.birthdate) AS ageinvideo, categories.name AS categoryName, attributes.name AS attributeName, locations.name AS locationName, websites.name AS websiteName
+            SELECT videos.id AS videoID, videos.starAge, videos.path, videos.name AS videoName,
+                   videos.date AS videoDate, stars.name AS star, datediff(videos.date, stars.birthdate) AS ageinvideo,
+                   categories.name AS categoryName, attributes.name AS attributeName, locations.name AS locationName,
+                   websites.name AS websiteName, sites.name AS siteName
             	FROM videos
                 	LEFT JOIN videostars ON videos.id = videostars.videoID
                 	LEFT JOIN stars ON stars.id = videostars.starID
                 	LEFT JOIN videowebsites ON videos.id = videowebsites.videoID
                 	LEFT JOIN websites ON videowebsites.websiteID = websites.id
+            	    LEFT OUTER JOIN videosites ON videosites.videoID = videos.id
+            	    LEFT JOIN sites ON sites.id = videosites.siteID
                 	LEFT JOIN videocategories ON videos.id = videocategories.videoID
                 	LEFT JOIN categories ON videocategories.categoryID = categories.id
                 	LEFT JOIN videoattributes ON videos.id = videoattributes.videoID

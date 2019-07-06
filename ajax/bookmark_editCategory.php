@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['bookmarkID']) && isset($_GET['categoryID'])) {
-	if (!empty($_GET['bookmarkID']) && !empty($_GET['categoryID'])) {
-		$bookmarkID = $_GET['bookmarkID'];
-		$categoryID = $_GET['categoryID'];
+if (isset($_POST['bookmarkID']) && isset($_POST['categoryID'])) {
+	if (!empty($_GET['bookmarkID']) && !empty($_POST['categoryID'])) {
+		$bookmarkID = $_POST['bookmarkID'];
+		$categoryID = $_POST['categoryID'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT videoID, categoryID FROM bookmarks WHERE id = :bookmarkID LIMIT 1");

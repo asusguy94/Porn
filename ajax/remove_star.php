@@ -1,9 +1,9 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['starID'])) {
-	if (!empty($_GET['starID'])) {
-		$id = $_GET['starID'];
+if (isset($_POST['starID'])) {
+	if (!empty($_POST['starID'])) {
+		$id = $_POST['starID'];
 
 		global $pdo;
 

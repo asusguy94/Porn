@@ -3,10 +3,10 @@ include('../_class.php');
 $basic = new Basic();
 $stars = new Star();
 
-if (isset($_GET['id']) && isset($_GET['image'])) {
-	if (!empty($_GET['id']) && !empty($_GET['image'])) {
-		$id = $_GET['id'];
-		$image = $_GET['image'];
+if (isset($_POST['id']) && isset($_POST['image'])) {
+	if (!empty($_POST['id']) && !empty($_POST['image'])) {
+		$id = $_POST['id'];
+		$image = $_POST['image'];
 
 		$ext = $basic->getExtension($image);
 		if ($ext === 'jpe' || $ext === 'jpeg') $ext = 'jpg';

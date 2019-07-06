@@ -1,9 +1,9 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['starID'])) {
-	if (!empty($_GET['starID'])) {
-		$starID = $_GET['starID'];
+if (isset($_POST['starID'])) {
+	if (!empty($_POST['starID'])) {
+		$starID = $_POST['starID'];
 
 		global $pdo;
 		$query = $pdo->prepare("UPDATE stars SET autoTaggerIgnore = 1 WHERE id = ?");

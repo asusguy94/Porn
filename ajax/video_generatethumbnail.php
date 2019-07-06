@@ -3,13 +3,13 @@ include('../_class.php');
 
 $ffmpeg = new FFMPEG();
 
-if (isset($_GET['videoID']) && !empty($_GET['videoID'])) {
-	if (isset($_GET['seconds']) && !empty($_GET['seconds'])) {
-		$seconds = $_GET['seconds'];
+if (isset($_POST['videoID']) && !empty($_POST['videoID'])) {
+	if (isset($_POST['seconds']) && !empty($_POST['seconds'])) {
+		$seconds = $_POST['seconds'];
 	}else{
 		$seconds = THUMBNAIL_START;
 	}
-	$videoID = $_GET['videoID'];
+	$videoID = $_POST['videoID'];
 
 
 	global $pdo;

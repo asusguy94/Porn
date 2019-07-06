@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['bookmarkID']) && isset($_GET['seconds'])) {
-	if (!empty($_GET['bookmarkID']) && !empty($_GET['seconds'])) {
-		$bookmarkID = $_GET['bookmarkID'];
-		$seconds = $_GET['seconds'];
+if (isset($_POST['bookmarkID']) && isset($_POST['seconds'])) {
+	if (!empty($_POST['bookmarkID']) && !empty($_POST['seconds'])) {
+		$bookmarkID = $_POST['bookmarkID'];
+		$seconds = $_POST['seconds'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT id FROM bookmarks WHERE id = :bookmarkID LIMIT 1");

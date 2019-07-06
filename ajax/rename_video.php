@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['videoID']) && isset($_GET['videoName'])) {
-	if (!empty($_GET['videoID']) && !empty($_GET['videoName'])) {
-		$videoID = $_GET['videoID'];
-		$videoName = $_GET['videoName'];
+if (isset($_POST['videoID']) && isset($_POST['videoName'])) {
+	if (!empty($_POST['videoID']) && !empty($_POST['videoName'])) {
+		$videoID = $_POST['videoID'];
+		$videoName = $_POST['videoName'];
 
 		global $pdo;
 		$query = $pdo->prepare("UPDATE videos SET name = ? WHERE id = ?");

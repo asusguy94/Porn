@@ -1,9 +1,9 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['videoID'])) {
-	if (!empty($_GET['videoID'])) {
-		$videoID = $_GET['videoID'];
+if (isset($_POST['videoID'])) {
+	if (!empty($_POST['videoID'])) {
+		$videoID = $_POST['videoID'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT * FROM videos WHERE id = :videoID LIMIT 1");

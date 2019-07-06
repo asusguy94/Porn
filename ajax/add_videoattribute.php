@@ -1,10 +1,10 @@
 <?php
 include('../_class.php');
 
-if (isset($_GET['attributeID']) && isset($_GET['videoID'])) {
-	if (!empty($_GET['attributeID']) && !empty($_GET['videoID'])) {
-		$videoID = $_GET['videoID'];
-		$attributeID = $_GET['attributeID'];
+if (isset($_POST['attributeID']) && isset($_POST['videoID'])) {
+	if (!empty($_POST['attributeID']) && !empty($_POST['videoID'])) {
+		$videoID = $_POST['videoID'];
+		$attributeID = $_POST['attributeID'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT id FROM videoattributes WHERE attributeID = :attributeID AND videoID = :videoID");

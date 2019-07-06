@@ -2,10 +2,10 @@
 include('../_class.php');
 $basic = new Basic();
 
-if (isset($_GET['videoID']) && isset($_GET['videoPath'])) {
-	if (!empty($_GET['videoID']) && !empty($_GET['videoPath'])) {
-		$videoID = $_GET['videoID'];
-		$newPath = $_GET['videoPath'];
+if (isset($_POST['videoID']) && isset($_POST['videoPath'])) {
+	if (!empty($_POST['videoID']) && !empty($_POST['videoPath'])) {
+		$videoID = $_POST['videoID'];
+		$newPath = $_POST['videoPath'];
 
 		global $pdo;
 		$query = $pdo->prepare("SELECT id FROM videos WHERE BINARY path = ? LIMIT 1"); // Case Sensitive
