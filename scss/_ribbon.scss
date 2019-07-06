@@ -34,6 +34,23 @@
     left: 100%
   }
 
+  &.ribbon-left {
+    top: -2px;
+    left: -10px;
+    right: auto;
+    transform: rotate(-45deg);
+    transform-origin: top right;
+  }
+
+  &.ribbon-purple {
+    $color: purple;
+    background-color: $color !important;
+
+    &:before, &:after {
+      background-color: $color !important;
+    }
+  }
+
   .ribbon-green {
     background-color: green !important;
 

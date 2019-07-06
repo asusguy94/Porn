@@ -1491,6 +1491,7 @@ class Star
 			print "<div id='videos' class='row'>";
 			$cdnNumber = 1;
 
+			$i = 1;
 			foreach ($query->fetchAll() as $data) {
 				$ageInVideo = $date_class->daysToYears($data['ageinvideo']);
 
@@ -1533,7 +1534,12 @@ class Star
 					$query_age->execute();
 					if ($query_age->rowCount()) $ageInVideo = $query_age->fetch()['starAge'];
 				}
-				if ($ageInVideo) print "<span class='ribbon'>$ageInVideo<span>";
+				if ($ageInVideo) print "<span class='ribbon'>$ageInVideo</span>";
+
+				// First & Last label
+				if($i === 1) print "<span class='ribbon ribbon-left ribbon-purple'>First</span>";
+				else if($i === self::videoCount($starID)) print "<span class='ribbon ribbon-left ribbon-purple'>Last</span>";
+				$i++;
 
 				print '</a>';
 
