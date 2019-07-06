@@ -2683,6 +2683,12 @@ class Settings
 	static function saveSettings($nameArr, $valueArr)
 	{
 		global $pdo;
+		$query = $pdo->prepare("SELECT * FROM settings LIMIT 1");
+		$query->execute();
+		if (!$query->rowCount()) {
+			$query = $pdo->prepare("INSERT INTO settings(id) VALUES (DEFAULT)");
+			$query->execute();
+		}
 
 		$str = "UPDATE settings SET";
 		for ($i = 0, $length = count($nameArr); $i < $length; $i++) {
