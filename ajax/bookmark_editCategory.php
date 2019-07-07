@@ -2,7 +2,7 @@
 include('../_class.php');
 
 if (isset($_POST['bookmarkID']) && isset($_POST['categoryID'])) {
-	if (!empty($_GET['bookmarkID']) && !empty($_POST['categoryID'])) {
+	if (!empty($_POST['bookmarkID']) && !empty($_POST['categoryID'])) {
 		$bookmarkID = $_POST['bookmarkID'];
 		$categoryID = $_POST['categoryID'];
 
