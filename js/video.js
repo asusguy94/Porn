@@ -202,14 +202,14 @@ function removeAttribute(attributeID) {
 function renameVideo(videoName) {
     ajax('ajax/rename_video.php', [
         {'videoID': videoID},
-        {'videoName': encodeURIComponent(videoName)}
+        {'videoName': videoName}
     ])
 }
 
 function renameFile(videoPath) {
     ajax('ajax/rename_file.php', [
         {'videoID': videoID},
-        {'videoPath': encodeURIComponent(videoPath)}
+        {'videoPath': videoPath}
     ])
 }
 
