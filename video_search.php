@@ -77,16 +77,19 @@ global $pdo;
                         <label for="date_desc">Newest</label>
                     </div>
 
-                    <h2>Website</h2>
+                    <h2>Website/Sites</h2>
 					<?php
-					$query = $pdo->prepare("SELECT websites.name FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");
+					$query = $pdo->prepare("SELECT websites.name, websites.id FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");
 					$query->execute();
 					if ($query->rowCount()) {
 						print '<div id="websites">';
 						print '<select class="pretty">';
-						print '<option name="website_All">All</option>';
-						foreach ($query->fetchAll() as $data) {
-							print "<option name='website_$data[name]' value='$data[name]'>$data[name]</option>";
+						print '<option>All</option>';
+						foreach ($query->fetchAll() as $wsite) {
+							print "<option data-wsite='" . Basic::encode($wsite['name']) . "'>$wsite[name]</option>";
+							foreach (Website::getSites($wsite['id']) as $site) {
+								print "<option data-wsite='" . Basic::encode($wsite['name']) . "' data-site='" . Basic::encode($site['name']) . "'>$wsite[name]_$site[name]</option>";
+							}
 						}
 						print '</select>';
 						print '</div>';

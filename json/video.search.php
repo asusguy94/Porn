@@ -35,6 +35,7 @@ for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $lo
 	$videoDate = $result[$i]->videoDate;
 	$star = $result[$i]->star;
 	$websiteName = $result[$i]->websiteName;
+	$siteName = $result[$i]->siteName;
 	$ageInVideo = $result[$i]->ageinvideo;
 	$ageInVideo_alt = $result[$i]->starAge;
 
@@ -66,6 +67,7 @@ for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $lo
 		print "\"videoDate\": \"$videoDate\",";
 		print "\"star\": \"$star\",";
 		print "\"websiteName\": \"$websiteName\",";
+		print "\"siteName\": \"$siteName\",";
 		print "\"ageInVideo\": \"$ageInVideo\",";
 		print "\"thumbnail\": \"$thumbnail\",";
 

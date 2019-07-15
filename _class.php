@@ -381,6 +381,11 @@ class Basic
 			$this->startsWith($path, 'https://')
 		);
 	}
+
+	static function encode($str)
+	{
+		return htmlspecialchars($str, ENT_QUOTES);
+	}
 }
 
 class File
@@ -1968,6 +1973,18 @@ class Location
 		$query->bindParam(':videoID', $videoID);
 		$query->execute();
 		return $query->rowCount();
+	}
+}
+
+class Website
+{
+	static function getSites($websiteID)
+	{
+		global $pdo;
+		$query = $pdo->prepare("SELECT sites.name FROM sites WHERE websiteID = :websiteID");
+		$query->bindParam(':websiteID', $websiteID);
+		$query->execute();
+		return $query->fetchAll();
 	}
 }
 

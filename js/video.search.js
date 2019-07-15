@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let videoName = elem[i]['videoName']
                 let videoDate = elem[i]['videoDate']
                 let websiteName = elem[i]['websiteName']
+                let siteName = elem[i]['siteName']
                 let ageInVideo = elem[i]['ageInVideo']
                 let star = elem[i]['star']
 
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 a.setAttribute('data-title', videoName)
                 a.setAttribute('data-star', star)
                 a.setAttribute('data-website', websiteName)
+                a.setAttribute('data-site', siteName)
                 a.setAttribute('data-existing', existing)
                 a.setAttribute('data-category-name', `["${category}"]`)
                 a.setAttribute('data-attribute-name', `["${attribute}"]`)
@@ -163,16 +165,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
 
-            /* Website */
+            /* Website - Site */
             if (website_select) {
                 const prettyWebsite_select = document.querySelectorAll('#websites > .prettydropdown')
                 $(prettyWebsite_select).on('change', function () {
-                    $video.removeClass('hidden-website')
+                    $video.removeClass('hidden-website hidden-site')
 
-                    let selectedWebsite = website_select.options[website_select.selectedIndex].textContent
+                    let dropdown = website_select.options[website_select.selectedIndex]
+                    let selectedWebsite = dropdown.getAttribute('data-wsite')
+                    let selectedSite = dropdown.getAttribute('data-site')
+
                     for (let i = 0; i < videoLength; i++) {
-                        if ((video[i].getAttribute('data-website') !== selectedWebsite) && selectedWebsite !== 'All') {
-                            video[i].classList.add('hidden-website')
+                        if (selectedWebsite) {
+                            let dataWsite = video[i].getAttribute('data-website')
+                            let dataSite = video[i].getAttribute('data-site')
+
+                            if (selectedWebsite !== dataWsite) { // not matching wsite
+                                video[i].classList.add('hidden-website')
+                            } else if (selectedSite && selectedSite !== dataSite) { // site defined & not matching site
+                                video[i].classList.add('hidden-site')
+                            }
                         }
                     }
                 })

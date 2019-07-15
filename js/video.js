@@ -556,6 +556,21 @@ $(function () {
         }
     })
 })
+/* Site & wSite */
+$(function () {
+    $.contextMenu({
+        selector: '#video-site',
+        items: {
+            'update_site': {
+                name: 'Fix Website & Site',
+                icon: 'fas fa-sync-alt',
+                callback: function () {
+                    fixSite()
+                }
+            }
+        }
+    })
+})
 /* Bookmarks */
 $(function () {
     $.contextMenu({
