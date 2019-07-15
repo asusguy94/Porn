@@ -124,7 +124,7 @@ function removeVideoStar(videoID) {
 
 function aliasSwapTitle(aliasID) {
     ajax('ajax/alias_swap_title.php', [
-        {'alias': aliasID},
+        {'aliasID': aliasID},
         {'starID': starID}
     ])
 }
