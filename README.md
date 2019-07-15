@@ -38,9 +38,9 @@
 
 ### Initialize Database & edit _class.php
 This app requires a database to function properly, I recomend using [phpMyAdmin](https://www.phpmyadmin.net)
-1. Login to the administration console of your database management of choice
+1. **Login to the administration console of your database management of choice**
 	- You can usually use `root` for username and ` ` (no character) for password
-2. Create a new user (optional, as you can use the root account instead)
+2. **Create a new user (optional, as you can use the root account instead)**
 	-  phpMyAdmin
 		- Click on `User Accounts`
 		- Click on `Add New User`
@@ -48,12 +48,12 @@ This app requires a database to function properly, I recomend using [phpMyAdmin]
 		- Type password in the text field, or choose no password in the dropdown menu
 		- Scroll down to Global Privileges and click on `Check All`
 		- Scroll down to the bottom and click on `Go`
-3. Create a database
+3. **Create a database**
 	- phpMyAdmin
 		- Click on `Databases`
 		- Choose a database name and type it in the text box
 		- Click on `Create`
-4. Import tables into the database
+4. **Import tables into the database**
 	- phpMyAdmin
 		- Make sure the correct database is selected
 			- If you've just created the database from the previous step, it should already be selected
@@ -65,7 +65,7 @@ This app requires a database to function properly, I recomend using [phpMyAdmin]
 		- Scroll down to the bottom and click on `Go`
 		- The tables will now be imported into the database
 			- it might take some time to complete, just wait for it to finish
-5. Edit `_class.php`
+5. **Edit `_class.php`**
 	- Open `_class.php` in any text editor
 	- Find the line that says `define('DB', 'porn')` and replace `'porn'` with the name of your database
 		- If you created a database with the name `'private'`, the line should be `define('DB', 'private')`
@@ -77,7 +77,7 @@ This app requires a database to function properly, I recomend using [phpMyAdmin]
     - Find the line that says `define('DB_PASS', 'Qnn3ANukory20UAQ')` and replace `'Qnn3ANukory20UAQ'` with your password
         - If have a password `'private_pass'`, the line should be `define('DB_PASS', 'private_pass')`
         - You can also use `''` as a password, if you used `'root'` as a username
-6. Save the file
+6. **Save the file**
 
 ### Initialize Settings
 When first starting out, the settings will be missing from the database, you will have to initialize the table yourself.
