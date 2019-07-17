@@ -102,3 +102,4 @@ This will install any new packages added to the project & update any existing pa
 - [ ] Implement Bootstrap 4
 - [ ] Video-page bookmark-visuals are broken on smaller devices
 - [x] Upload .SQL file for project
+- [ ] Display indicator on search page for various counts
