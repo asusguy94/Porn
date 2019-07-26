@@ -474,13 +474,9 @@ $(function () {
                             position: {my: "top", at: "top+150"}
                         })
 
-                        const searchWrapper = document.createElement('span')
-                        searchWrapper.classList.add('search')
-                        const searchInner = document.createElement('span')
-                        searchInner.classList.add('inner')
 
-                        searchWrapper.appendChild(searchInner)
-                        dialogQuery.append(searchWrapper)
+
+                        searchField(dialogQuery)
                         const query = $('#attributes.hidden > .attribute')
                         for (let i = 0; i < query.length; i++) {
                             let attributeID = query.eq(i).attr('data-attribute-id')
@@ -495,7 +491,7 @@ $(function () {
 
                             dialogQuery.append(btn)
                         }
-                        categorySearch()
+                        searchData()
                     })
                 }
             }, 'add_location': {
@@ -518,13 +514,8 @@ $(function () {
                             position: {my: "top", at: "top+150"}
                         })
 
-                        const searchWrapper = document.createElement('span')
-                        searchWrapper.classList.add('search')
-                        const searchInner = document.createElement('span')
-                        searchInner.classList.add('inner')
+                        searchField(dialogQuery)
 
-                        searchWrapper.appendChild(searchInner)
-                        dialogQuery.append(searchWrapper)
                         const query = $('#locations.hidden > .location')
                         for (let i = 0; i < query.length; i++) {
                             let locationID = query.eq(i).attr('data-location-id')
@@ -539,7 +530,8 @@ $(function () {
 
                             dialogQuery.append(btn)
                         }
-                        categorySearch()
+
+                        searchData()
                     })
                 }
             }, 'divider': '---',
@@ -599,13 +591,8 @@ $(function () {
                             position: {my: "top", at: "top+150"}
                         })
 
-                        const searchWrapper = document.createElement('span')
-                        searchWrapper.classList.add('search')
-                        const searchInner = document.createElement('span')
-                        searchInner.classList.add('inner')
+                        searchField(dialogQuery)
 
-                        searchWrapper.appendChild(searchInner)
-                        dialogQuery.append(searchWrapper)
                         const query = $('#category_list > option')
                         for (let i = 0; i < query.length; i++) {
                             let category = query.eq(i)
@@ -624,7 +611,7 @@ $(function () {
                             }
                         }
 
-                        categorySearch()
+                        searchData()
                     })
                 }
             }, 'edit_time': {
@@ -697,13 +684,8 @@ $(function () {
                             position: {my: "right top", at: "right-160 top+250"}
                         })
 
-                        const searchWrapper = document.createElement('span')
-                        searchWrapper.classList.add('search')
-                        const searchInner = document.createElement('span')
-                        searchInner.classList.add('inner')
+                        searchField(dialogQuery)
 
-                        searchWrapper.appendChild(searchInner)
-                        dialogQuery.append(searchWrapper)
                         const query = $('#category_list > option')
                         for (let i = 0; i < query.length; i++) {
                             let categoryID = query.eq(i).attr('data-category-id')
@@ -719,7 +701,7 @@ $(function () {
                             dialogQuery.append(btn)
                         }
 
-                        categorySearch()
+                        searchData()
                     })
                 }
             },
@@ -891,14 +873,24 @@ $(function () {
     })
 })
 
-function categorySearch() {
+function searchField(dialogQuery = $('#dialog')) {
+    const searchWrapper = document.createElement('span')
+    searchWrapper.classList.add('search')
+    const searchInner = document.createElement('span')
+    searchInner.classList.add('inner')
+
+    searchWrapper.appendChild(searchInner)
+    dialogQuery.append(searchWrapper)
+}
+
+function searchData() {
+    const CHAR_BACKSPACE = 8
+    const CHAR_SPACE = 32
+    const CHAR_A = 65
+    const CHAR_Z = 90
+
     let input = ''
     document.addEventListener('keydown', function (e) {
-        const CHAR_BACKSPACE = 8
-        const CHAR_SPACE = 32
-        const CHAR_A = 65
-        const CHAR_Z = 90
-
         if (((e.which === CHAR_BACKSPACE && input.length) || e.which === CHAR_SPACE) || (e.which >= CHAR_A && e.which <= CHAR_Z)) {
             e.preventDefault() // spacebar scroll
 
