@@ -205,17 +205,29 @@ input.xdsoft_input {
 }
 
 [data-badge]:after {
-  content: attr(data-badge);
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  background: green;
-  color: white;
-  text-align: center;
-  border-radius: 50%;
-  box-shadow: 0 0 1px #333;
+    content: attr(data-badge);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: green;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0 0 1px #333;
+}
 
-  @include circle(23px, 30px);
+[data-badge] {
+  &.badge-x:after {
+    @include circle(23px)
+  }
+
+  &.badge-xx:after {
+    @include circle(23px, 30px)
+  }
+
+  &.badge-xxx:after {
+    @include circle(23px, 37px)
+  }
 }
 
 /* Video Count */

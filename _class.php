@@ -2256,11 +2256,15 @@ class Video
 				$ageInVideo = $date_class->daysToYears($data['ageinvideo']);
 				$videoCount = Star::videoCount($data['starID']);
 
+				if($videoCount > 99) $badgeClass = 'xxx';
+				else if($videoCount > 9) $badgeClass = 'xx';
+				else $badgeClass = 'x';
+
 				if ($data['image'] != '') {
-					print "<div class='star' data-star-id='$data[starID]' data-badge='$videoCount'>";
+					print "<div class='star badge-$badgeClass' data-star-id='$data[starID]' data-badge='$videoCount'>";
 					print "<img class='image' src='images/stars/$data[image]?v=" . md5_file("images/stars/$data[image]") . "'>";
 				} else {
-					print "<div class='star no-image' data-star-id='$data[starID]' data-badge='$videoCount'>";
+					print "<div class='star no-image badge-$badgeClass' data-star-id='$data[starID]' data-badge='$videoCount'>";
 					print '<div class="image" style="height: 275px; width: 200px"></div>';
 				}
 
