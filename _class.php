@@ -2740,3 +2740,25 @@ class Settings
 		$query->execute();
 	}
 }
+
+class wsEditor
+{
+	static function getSites($websiteID)
+	{
+		global $pdo;
+		$query = $pdo->prepare("SELECT sites.id, sites.name, COUNT(videosites.siteID) AS total FROM sites LEFT JOIN videosites ON sites.id = videosites.siteID WHERE websiteID = :websiteID GROUP BY sites.id ORDER BY name");
+		$query->bindParam(':websiteID', $websiteID);
+		$query->execute();
+
+		return $query->fetchAll();
+	}
+
+	static function getWebsites()
+	{
+		global $pdo;
+		$query = $pdo->prepare("SELECT websites.id, websites.name, COUNT(videowebsites.websiteID) AS total FROM websites LEFT JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY websites.id ORDER BY name");
+		$query->execute();
+
+		return $query->fetchAll();
+	}
+}
