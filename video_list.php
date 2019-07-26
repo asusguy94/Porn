@@ -17,8 +17,10 @@ $videos = new Video();
 
         <main class="container-fluid">
             <section class="row">
-                <div class="col-12">
-					<?php $videos->fetchVideos(30) ?>
+                <div class="col">
+                    <div class="list-group">
+						<?php $videos->fetchVideos(24, ["selector" => 'li', "className" => 'list-group-item list-group-item-action']) ?>
+                    </div>
                 </div>
             </section>
         </main>

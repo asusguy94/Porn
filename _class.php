@@ -104,8 +104,8 @@ class HomePage
 							<a class='video col px-0 mx-3 ribbon-container' href='video.php?id=$data[id]'>
 								<img class='lazy mx-auto img-thumbnail' data-src='images/videos/$data[id]-" . THUMBNAIL_RES . ".jpg' alt='thumbnail'/>
 								<span class='title mx-auto'>$data[name]</span>";
-								if($ribbonCol) print "<span class='ribbon'>$data[$ribbonCol]</span>";
-							print "</a>";
+					if ($ribbonCol) print "<span class='ribbon'>$data[$ribbonCol]</span>";
+					print "</a>";
 				}
 			} else {
 				break;
@@ -1504,7 +1504,7 @@ class Star
 				$localPathWebm = str_replace('.mp4', '.webm', str_replace('.m4v', '.webm', $localPath));
 				$localPathMkv = str_replace('.mp4', '.mkv', str_replace('.m4v', '.mkv', $localPath));
 
-				if(enableHTTPS) $protocol = 'https:';
+				if (enableHTTPS) $protocol = 'https:';
 				else $protocol = 'http:';
 
 				if (CDN) $cdnPrefix = "$protocol//cdn$cdnNumber-";
@@ -2040,20 +2040,35 @@ class Video
 		return true;
 	}
 
-	function fetchVideos($limit)
+	function fetchVideos($limit, $options = [])
 	{
+		if (!array_key_exists('selector', $options)) $options['selector'] = 'p';
+		if (!array_key_exists('className', $options)) {
+			$options['className'] = '';
+		}
+
 		$date_class = new Date();
 		global $pdo;
 		$query = $pdo->prepare("{$this->sql()}{$this->sqlOrder}");
 		$query->execute();
 		if ($query->rowCount()) {
 			foreach ($query->fetchAll() as $data) {
-				if(!$limit) return;
-				if (!file_exists("videos/$data[path]")) continue;
+				if (!$limit) return;
 
 				$age = $date_class->daysToYears($data['ageinvideo']);
 				if (!$age) $age = '00';
-				print "<p>Age: $age <a href='video.php?id=$data[id]'>$data[name]</a></p>";
+
+				if (!file_exists("videos/$data[path]")) continue;
+
+				print "<$options[selector] class='$options[className]'>";
+				if ($options['selector'] === 'li' && $options['className'] !== '') {
+					print "<span class='badge badge-primary badge-pill'>$age</span>";
+					print "<a class='col-10' href='video.php?id=$data[id]'>$data[name]</a>";
+				} else {
+					print "Age: $age <a href='video.php?id=$data[id]'>$data[name]</a>";
+				}
+				print "</$options[selector]>";
+
 				$limit--;
 			}
 		}
@@ -2189,9 +2204,9 @@ class Video
 			print "<h2 id='video-title'><span id='video-name'>$name</span><small>$date</small><small>$lcn</small><small>$attr</small></h2>";
 
 			if (strlen($site)) {
-				print "<h3 id='video-site'>$wsite - $site</h3>";
+				print "<h3 id='video-site'><span id='wsite'>$wsite</span> - <span id='site'>$site</span></h3>";
 			} else {
-				print "<h3 id='video-site'>$wsite</h3>";
+				print "<h3 id='video-site'><span id='wsite'>$wsite</span></h3>";
 			}
 
 
@@ -2214,7 +2229,7 @@ class Video
 			print "</video>";
 
 			print '<span id="duration" class="hidden">' . $this->videoDuration . '</span>';
-			print '<span id="vtt" class="hidden">' . file_exists("vtt/$id.vtt") .'</span>';
+			print '<span id="vtt" class="hidden">' . file_exists("vtt/$id.vtt") . '</span>';
 
 			print '</div>';
 		}
@@ -2551,7 +2566,8 @@ class Date
 		return $years;
 	}
 
-	function parse($dateStr){
+	function parse($dateStr)
+	{
 		return date("j F Y", strtotime($dateStr));
 	}
 }
