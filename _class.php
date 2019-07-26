@@ -1542,8 +1542,10 @@ class Star
 				if ($ageInVideo) print "<span class='ribbon'>$ageInVideo</span>";
 
 				// First & Last label
-				if($i === 1) print "<span class='ribbon ribbon-left ribbon-purple'>First</span>";
-				else if($i === self::videoCount($starID)) print "<span class='ribbon ribbon-left ribbon-purple'>Last</span>";
+				if (self::videoCount($starID) > 1) {
+					if ($i === 1) print "<span class='ribbon ribbon-left ribbon-purple'>First</span>";
+					else if ($i === self::videoCount($starID)) print "<span class='ribbon ribbon-left ribbon-purple'>Last</span>";
+				}
 				$i++;
 
 				print '</a>';
@@ -1592,14 +1594,22 @@ class Star
 	function downloadImage($url, $name)
 	{
 		$basic = new Basic();
+
+		$localDir = "../images/stars";
+
 		$ext = strtolower($basic->getExtension($url));
-		if ($ext === 'jpe' || $ext === 'jpeg') $ext = 'jpg';
+		if ($ext === 'jpe' || $ext === 'jpeg') {
+			$ext = 'jpg';
+		}
 
-		$localPath = "../images/stars/$name.$ext";
+		if ($ext === 'webp') {
+			// TODO WebP now working
 
-		$url = str_replace(' ', '%20', $url);
-
-		return copy($url, $localPath);
+			return false;
+		}else {
+			$localPath = "$localDir/$name.$ext";
+			return copy($url, $localPath);
+		}
 	}
 
 	function downloadImage_local($file, $name, $ext)

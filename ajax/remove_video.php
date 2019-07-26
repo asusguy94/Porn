@@ -77,7 +77,7 @@ function removeThumbnails($videoID)
 	unlink("../images/videos/$videoID-" . THUMBNAIL_RES . ".jpg");
 
 	unlink("../images/thumbnails/$videoID.jpg");
-	unlink("../images/vtt/$videoID.vtt");
+	unlink("../vtt/$videoID.vtt");
 }
 
 function removeHls($dir)

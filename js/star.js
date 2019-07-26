@@ -56,13 +56,15 @@ function addStarImage(url) {
         {'id': starID},
         {'image': url}
     ], (data) => {
-        let dropbox = document.getElementById('dropbox')
+        if(data.responseText.length) {
+            let dropbox = document.getElementById('dropbox')
 
-        let img = document.createElement('img')
-        img.src = `images/stars/${starID}.${ext}?v=${data.responseText}`
+            let img = document.createElement('img')
+            img.src = `images/stars/${starID}.${ext}?v=${data.responseText}`
 
-        insertBefore(dropbox, img)
-        dropbox.remove()
+            insertBefore(dropbox, img)
+            dropbox.remove()
+        }
     })
 }
 
@@ -361,8 +363,6 @@ function dropbox() {
         let image = evt.dataTransfer.getData('text')
 
         if (isLocalFile(image)) {
-            /* TODO Needs fix */
-
             image = evt.dataTransfer.files
             if (image.length === 1) {
                 image = image[0]

@@ -114,7 +114,7 @@ global $pdo;
 
                     <h2>Breast</h2>
 					<?php
-					$query = $pdo->prepare("SELECT breast FROM stars WHERE breast IS NOT NULL GROUP BY breast ORDER BY breast='AA' DESC, breast ASC");
+					$query = $pdo->prepare("SELECT breast FROM stars WHERE breast IS NOT NULL GROUP BY breast ORDER BY breast='AA' DESC, breast");
 					$query->execute();
 					if ($query->rowCount()) {
 						print '<div id="breasts">';

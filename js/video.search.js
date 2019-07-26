@@ -38,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const row = document.createElement('div')
             row.classList.add('row', 'justify-content-center')
 
-            const elem = data['videos']
-            for (let i = 0; i < elem.length; i++) {
+            for (let i = 0, elem = data['videos']; i < elem.length; i++) {
                 let thumbnail = elem[i]['thumbnail']
 
                 let existing = elem[i]['existing']
@@ -134,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .replace(/\*/g, '')
                     .replace(/%/g, '')
                     .replace(/"/g, "'")
+                    .replace(/ {2}/g, ' ')
 
                 $video.removeClass('hidden-title')
 
