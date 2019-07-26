@@ -1991,9 +1991,19 @@ class Website
 	static function getSites($websiteID)
 	{
 		global $pdo;
-		$query = $pdo->prepare("SELECT sites.name FROM sites WHERE websiteID = :websiteID");
+		$query = $pdo->prepare("SELECT * FROM sites WHERE websiteID = :websiteID ORDER BY name");
 		$query->bindParam(':websiteID', $websiteID);
 		$query->execute();
+
+		return $query->fetchAll();
+	}
+
+	static function getWebsites()
+	{
+		global $pdo;
+		$query = $pdo->prepare("SELECT * FROM websites");
+		$query->execute();
+
 		return $query->fetchAll();
 	}
 }
