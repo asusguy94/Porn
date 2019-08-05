@@ -88,8 +88,13 @@ document.addEventListener('DOMContentLoaded', function () {
     autoComplete()
     videoVolume(0.125)
 
-    onFocus(videoStats)
-    onFocus(bookmarkCollision)
+    onFocus(function () {
+        videoStats()
+        bookmarkCollision()
+    })
+
+    /** WIP **/
+    //bookmarkTooltip()
 })
 
 document.onkeydown = checkKey
@@ -146,6 +151,11 @@ function isPlaying() {
 function playFrom(seconds) {
     videoPlayer.currentTime = seconds
     videoPlayer.play()
+}
+
+function stopFrom(seconds = -1) {
+    if (seconds !== -1) videoPlayer.currentTime = seconds
+    videoPlayer.pause()
 }
 
 function addPlay() {
@@ -1000,13 +1010,11 @@ function bookmarkSort() {
 }
 
 function onFocus(callback) {
-    if (document.hasFocus()) {
+    if (document.hasFocus()) callback()
+
+    window.addEventListener('focus', function () {
         callback()
-    } else {
-        $(window).focus(function () {
-            callback()
-        })
-    }
+    })
 }
 
 function autoComplete() {

@@ -2228,7 +2228,7 @@ class Video
 
 			print "</video>";
 
-			print '<span id="duration" class="hidden">' . $this->videoDuration . '</span>';
+			print "<span id='duration' class='hidden'>$this->videoDuration</span>";
 			print '<span id="vtt" class="hidden">' . file_exists("vtt/$id.vtt") . '</span>';
 
 			print '</div>';
