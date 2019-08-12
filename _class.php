@@ -143,7 +143,7 @@ class Basic
 			"link" => 'settings.php'
 		), array(
 			"name" => "DB",
-			"link" => "http://ds1517/phpMyAdmin?pma_username=" . DB_USER . "&pma_password=" . DB_PASS
+			"link" => "https://ds1517/phpMyAdmin?pma_username=" . DB_USER . "&pma_password=" . DB_PASS
 
 		), array(
 			"name" => "Generate Thumbnails",
