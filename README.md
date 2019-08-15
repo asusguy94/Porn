@@ -1,4 +1,11 @@
 # Welcome
+## What is this app
+It is an app to organize all your video files.
+- When an import is started the program imports all your files within the videos folder ie: all files within `videos/somesite and videos/someothersite`
+  - If a folder has an underscore in the name, it will ignore that folder ie: `videos/somesite will be imported, videos/some_other_site will not be imported`
+- If the star has already been added, the star will be added to that video, otherwise you can add a star manually and then all the relevant videos will be added to that star
+- When a video is imported, it will automatically set the date of that video, if the supplied date was incorrect, you can rename the video (from the app) and refresh the date
+
 ## Some information about the system
 - The program is built on **HTML, PHP, MySQL & JavaScript**, so to use it you either have to run a local server or if you have another computer you could run the server from there
   - I'm running the server on a NAS...so most computers should be able to outperform my setup
