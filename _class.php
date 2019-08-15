@@ -1652,7 +1652,7 @@ class Star
 		$query->execute();
 		$star = $query->fetch();
 
-		$url = "https://www.freeones.no/search/?q=" . str_replace(' ', '+', $star['name']);
+		$url = "https://www.freeones.com/search/?q=" . str_replace(' ', '+', $star['name']);
 
 		$base = file_get_contents($url);
 		$searchElement = explode('<tr>', explode('class="ContentBlockBody Block3"', $base)[1])[2];
@@ -1677,7 +1677,8 @@ class Star
 			$addAlias($names_main);
 		}
 
-		$url = "https://www.freeones.no$starBio";
+		$url = "https://www.freeones.com{$starBio}";
+
 		$bio = file_get_contents($url);
 
 		$bio_content = explode('<div class="ContentBlockBody"', $bio)[1];
@@ -1686,24 +1687,11 @@ class Star
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Etnisitet:') {
+			if ($wrapper_header == 'Ethnicity:') {
 				$ethnicity = trim(explode('&nbsp;', explode('<td class="paramvalue">', $wrapper)[1])[0]);
 				break;
 			}
 		}
-
-		switch ($ethnicity) {
-			case 'Hvit':
-				$ethnicity = 'Caucasian';
-				break;
-			case 'Latinsk':
-				$ethnicity = 'Latin';
-				break;
-			case 'Svart':
-				$ethnicity = 'Black';
-				break;
-		}
-
 
 		// COUNTRY
 		$country = explode('" />', explode('title="', explode('<img class="middle"', $searchElement)[1])[1])[0];
@@ -1712,19 +1700,10 @@ class Star
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Fødselsdato:') {
+			if ($wrapper_header == 'Date of Birth:') {
 				$date = trim(str_replace("&nbsp;", '', explode(' (', explode('<td class="paramvalue">', $wrapper)[1])[0]));
-				if (strpos($date, 'Ukjent') !== false) {
+				if (strpos($date, 'Unknown') !== false) {
 					$date = '';
-				} else {
-					$date = str_replace('Januar', 'January', $date);
-					$date = str_replace('Februar', 'February', $date);
-					$date = str_replace('Mars', 'March', $date);
-					$date = str_replace('Mai', 'May', $date);
-					$date = str_replace('Juni', 'June', $date);
-					$date = str_replace('Juli', 'July', $date);
-					$date = str_replace('Oktober', 'October', $date);
-					$date = str_replace('Desember', 'December', $date);
 				}
 				break;
 			}
@@ -1734,63 +1713,27 @@ class Star
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Øyenfarge:') {
+			if ($wrapper_header == 'Eye Color:') {
 				$eyecolor = trim(explode('&nbsp;', explode('<td class="paramvalue">', $wrapper)[1])[0]);
 				break;
 			}
-		}
-
-		switch ($eyecolor) {
-			case 'Blå':
-				$eyecolor = 'Blue';
-				break;
-			case 'Brun':
-				$eyecolor = 'Brown';
-				break;
-			case 'Grå':
-				$eyecolor = 'Grey';
-				break;
-			case 'Grønn':
-				$eyecolor = 'Green';
-				break;
-			case 'Nøttebrun':
-				$eyecolor = 'Hazel';
-				break;
 		}
 
 		$haircolor = '';
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Hårfarge:') {
+			if ($wrapper_header == 'Hair Color:') {
 				$haircolor = trim(explode('&nbsp;', explode('<td class="paramvalue">', $wrapper)[1])[0]);
 				break;
 			}
-		}
-
-		switch ($haircolor) {
-			case 'Blond':
-				$haircolor = 'Blonde';
-				break;
-			case 'Brun':
-				$haircolor = 'Brown';
-				break;
-			case 'Gyllenbrun':
-				$haircolor = 'Auburn';
-				break;
-			case 'Rød':
-				$haircolor = 'Red';
-				break;
-			case 'Svart':
-				$haircolor = 'Black';
-				break;
 		}
 
 		$height = '';
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Høyde:') {
+			if ($wrapper_header == 'Height:') {
 				$height = trim(explode('"', explode('heightcm = "', explode('&nbsp;', explode('<td class="paramvalue">', $wrapper)[1])[0])[1])[0]);
 				break;
 			}
@@ -1802,7 +1745,7 @@ class Star
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Vekt:') {
+			if ($wrapper_header == 'Weight:') {
 				$weight = trim(explode('"', explode('weightkg = "', explode('&nbsp;', explode('<td class="paramvalue">', $wrapper)[1])[0])[1])[0]);
 				break;
 			}
@@ -1813,7 +1756,7 @@ class Star
 		for ($i = 0; $i < count(explode('<tr>', $bio_content)); $i++) {
 			$wrapper = explode('<tr>', $bio_content)[$i];
 			$wrapper_header = trim(explode('</b>', explode('<b>', $wrapper)[1])[0]);
-			if ($wrapper_header == 'Mål:') {
+			if ($wrapper_header == 'Measurements:') {
 				$breast_str = trim(explode('-', explode('&nbsp;', explode('<td class="paramvalue">', $wrapper)[1])[0])[0]);
 				break;
 			}
