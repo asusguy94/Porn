@@ -1,5 +1,4 @@
 @import "functions";
-
 /* Navigation */
 @import "navigation";
 
@@ -77,12 +76,15 @@
     .wsite {
       color: green;
     }
+
     .site {
       color: red;
     }
   }
 
   .divider {
+    color: grey;
+
     &::before, &::after {
       content: ' ';
     }
@@ -160,6 +162,7 @@ small {
 
 input.xdsoft_input {
   text-transform: capitalize;
+
   &[name="breast"] {
     text-transform: uppercase;
   }
@@ -177,6 +180,7 @@ input.xdsoft_input {
   .inner {
     display: inherit;
     padding: 2px 4px;
+
     &:not(:empty) {
       background-color: orange;
     }
@@ -205,15 +209,15 @@ input.xdsoft_input {
 }
 
 [data-badge]:after {
-    content: attr(data-badge);
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    background: green;
-    color: white;
-    text-align: center;
-    border-radius: 50%;
-    box-shadow: 0 0 1px #333;
+  content: attr(data-badge);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: green;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 0 1px #333;
 }
 
 [data-badge] {
@@ -227,6 +231,10 @@ input.xdsoft_input {
 
   &.badge-xxx:after {
     @include circle(23px, 37px)
+  }
+
+  &.badge-xxxx:after {
+    @include circle(23px, 44px)
   }
 }
 

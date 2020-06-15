@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function () {
     videoHover()
 
     if (isIgnored()) title.classList.add('ignored')
-    if ($(".ribbon-green").length === 1) alert('Warning!')
+    if ($(".ribbon-green").length === 1) document.getElementById('alert-container').classList.remove('d-none')
+
 })
 
 function isIgnored() {
@@ -56,7 +57,7 @@ function addStarImage(url) {
         {'id': starID},
         {'image': url}
     ], (data) => {
-        if(data.responseText.length) {
+        if (data.responseText.length) {
             let dropbox = document.getElementById('dropbox')
 
             let img = document.createElement('img')
@@ -197,7 +198,7 @@ $(function () {
         items: {
             'rename': {
                 name: 'Rename',
-                icon: 'rename',
+                icon: 'edit',
                 callback: function () {
                     const dialogWrapper = document.createElement('div')
                     dialogWrapper.id = 'dialog'
@@ -235,6 +236,7 @@ $(function () {
             },
             "add_alias": {
                 name: "Add Alias",
+                icon: 'add',
                 callback: function () {
                     const dialogWrapper = document.createElement('div')
                     dialogWrapper.id = 'dialog'
@@ -254,9 +256,10 @@ $(function () {
                         const dialogInput = document.createElement('input')
                         dialogInput.type = 'text'
                         dialogInput.name = 'starName_alias'
-                        dialogInput.autofocus = true
 
                         dialogQuery.append(dialogInput)
+                        dialogInput.focus()
+
                         document.querySelector('input[name="starName_alias"]').addEventListener('keydown', function (e) {
                             if (e.keyCode === 13) {
                                 addStarAlias(this.value)
@@ -267,6 +270,7 @@ $(function () {
             },
             'ignore_star': {
                 name: 'Ignore Star',
+                icon: 'fas fa-ban',
                 callback: function () {
                     ignoreStar()
                 },
@@ -274,10 +278,21 @@ $(function () {
             },
             'enable_star': {
                 name: 'Enable Star',
+                icon: 'fas fa-check',
                 callback: function () {
                     enableStar()
                 },
                 visible: isIgnored()
+            },
+            'divider': '---',
+            'copy_star': {
+                name: 'Copy Star',
+                icon: 'copy',
+                callback: function (itemKey, options) {
+                    let data = options.$trigger.text()
+
+                    setClipboard(data)
+                }
             }
         }
     })
@@ -472,35 +487,24 @@ function setFocus() {
 }
 
 /* Video */
-function isPlaying(index = 1) {
-    return !video[index].paused
-}
-
 function goToAndStop(index, time = startTime) {
     video[index].currentTime = time
-    if (isPlaying(index)) video[index].pause()
+    video[index].pause()
 }
 
 function goToAndPlay(index, time = 0) {
     video[index].currentTime = time
-    if (!isPlaying(index)) video[index].play()
+    video[index].play()
 }
 
 function videoHover() {
     let thumbnail
 
     for (let i = 0; i < video.length; i++) {
-        video[i].addEventListener('loadedmetadata', function () {
-            this.currentTime = startTime
-        })
+        let $this = $(video[i])
 
-        video[i].addEventListener('mouseenter', function () {
-            startThumbnailPlayback(i)
-        })
-
-        video[i].addEventListener('mouseleave', function () {
-            stopThumbnailPlayback(i)
-        })
+        $this.currentTime = startTime
+        $this.hover(() => startThumbnailPlayback(i), () => stopThumbnailPlayback(i))
     }
 
     function startThumbnailPlayback(index) {
@@ -539,6 +543,20 @@ function insertBefore(referenceNode, el) {
 
 function isLocalFile(path) {
     return !((path.indexOf('http://') > -1) || (path.indexOf('https://') > -1))
+}
+
+function setClipboard(data) {
+    const el = document.createElement("textarea")
+
+    el.value = data
+    el.setAttribute("readonly", "")
+    el.style.position = "absolute"
+    el.style.left = "-9999px"
+
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand("copy")
+    document.body.removeChild(el)
 }
 
 

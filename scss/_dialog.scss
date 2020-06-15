@@ -1,6 +1,8 @@
+//noinspection CssUnusedSymbol
 .ui-dialog {
   width: 100%;
 
+  //noinspection CssUnusedSymbol
   .ui-dialog-title {
     text-align: center;
   }
@@ -16,5 +18,11 @@
 
   input {
     width: 95%;
+  }
+
+  .selected {
+    box-shadow: 0 0 4px blue;
+    background-color: dodgerblue;
+    color: white;
   }
 }

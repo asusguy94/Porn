@@ -9,7 +9,6 @@ $root = glob('videos/*', GLOB_ONLYDIR);
 
 $path_arr = [];
 foreach ($root as $file) { // store directory names
-
 	if (!$basic->contains($file, '_') || $basic->contains($file, '_ffmpeg')) {
 		echo $file, '<br>';
 		array_push($path_arr, $file);

@@ -41,16 +41,18 @@ h2 {
   font-weight: bold;
 }
 
-#loader {
-  border: 16px solid #F3F3F3;
-  border-top-color: $spinnerBlue;
-  border-bottom-color: $spinnerBlue;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
+.not label {
+  color: red;
+  font-weight: bold;
+}
 
+#loader {
+  display: block;
   margin: 0 auto;
+
+  border-width: 8px;
+
+  @include wh(5em)
 }
 
 @keyframes spin {
@@ -65,4 +67,23 @@ h2 {
 
 .flag {
   margin-right: 5px;
+}
+
+.count {
+  position: absolute;
+  left: 80px;
+
+  opacity: 0.5;
+
+  &::before {
+    content: '(';
+  }
+
+  &::after {
+    content: ')';
+  }
+}
+
+#video-count {
+  color: blue
 }

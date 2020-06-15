@@ -1,17 +1,17 @@
 <?php
-include('_class.php');
-$basic = new Basic();
+    include('_class.php');
+    $basic = new Basic();
 ?>
 
 <!doctype html>
 <html>
     <head>
-		<?php $basic->head('Settings', array('bootstrap'), array('bootstrap')) ?>
+        <?php $basic->head('Settings', array('bootstrap'), array('bootstrap')) ?>
     </head>
 
     <body>
         <nav>
-			<?php $basic->navigation() ?>
+            <?php $basic->navigation() ?>
         </nav>
 
         <main class="container">
@@ -110,9 +110,24 @@ $basic = new Basic();
                             </div>
                         </fieldset>
 
+                        <!-- DASH -->
+                        <fieldset class="form-group" data-toggle="tooltip" data-placement="right" data-html="true"
+                                  title="Enable DASH streaming instead of hardcoded video<br><u>Fallback to HLS & mp4 and <br>webm and/or mkv if enabled</u>">
+                            <div class="row">
+                                <legend class="col-form-label col-2 pt-0">DASH</legend>
+                                <div class="col-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="enable_dash"
+                                               data-toggle="switchbutton" data-onlabel="Enable"
+                                               data-offlabel="Disable" <? if (enableDASH) echo 'checked' ?>>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
                         <!-- HLS -->
                         <fieldset class="form-group" data-toggle="tooltip" data-placement="right" data-html="true"
-                                  title="Enable streaming instead of hardcoded video<br><u>Fallback to mp4 and <br>webm and/or mkv if enabled</u>">
+                                  title="Enable HLS streaming instead of hardcoded video<br><u>Fallback to mp4 and <br>webm and/or mkv if enabled</u>">
                             <div class="row">
                                 <legend class="col-form-label col-2 pt-0">HLS</legend>
                                 <div class="col-10">
@@ -172,29 +187,47 @@ $basic = new Basic();
                                         value="<?= CDN_MAX ?>"></div>
                         </div>
 
+                        <h4>Star</h4>
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-2 pt-0">Freeones Star Parser</legend>
+                                <div class="col-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="parser"
+                                               data-toggle="switchbutton" data-onlabel="Enable"
+                                               data-offlabel="Disable" <? if (PARSER) echo 'checked' ?>>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
                         <button type="submit" class="btn btn-primary" name="submit">Save</button>
-
-						<?php
-
-						if (isset($_POST['submit'])) {
-							$names = ['enable_https', 'cdn', 'similar_text', 'enable_fa', 'enable_webm', 'enable_mkv', 'enable_hls', 'similar_def', 'similar_max', 'thumbnail_res', 'thumbnail_start', 'cdn_max'];
-							$values = array_map(function ($item) {
-								$val = $_POST[$item];
-
-								if (empty($val) || $val == 'off') {
-									return 0;
-								} else if ($val == 'on') {
-									return 1;
-								} else {
-									return $val;
-								}
-							}, $names);
-
-							Settings::saveSettings($names, $values);
-							Basic::reload();
-						}
-
-						?>
+                        
+                        <?php
+                            
+                            if (isset($_POST['submit'])) {
+                                $names = [
+                                    'enable_https', 'cdn', 'similar_text', 'enable_fa', 'enable_webm', 'enable_mkv',
+                                    'enable_dash', 'enable_hls', 'similar_def', 'similar_max',
+                                    'thumbnail_res', 'thumbnail_start', 'cdn_max', 'parser'
+                                ];
+                                $values = array_map(function ($item) {
+                                    $val = $_POST[$item];
+                                    
+                                    if (empty($val) || $val == 'off') {
+                                        return 0;
+                                    } else if ($val == 'on') {
+                                        return 1;
+                                    } else {
+                                        return $val;
+                                    }
+                                }, $names);
+                                
+                                Settings::saveSettings($names, $values);
+                                Basic::reload();
+                            }
+                        
+                        ?>
                     </form>
                 </section>
             </div>

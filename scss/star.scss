@@ -1,8 +1,6 @@
 @import "functions";
 
 aside {
-  border: 1px solid red;
-
   #similar {
     text-align: center;
 
@@ -38,6 +36,12 @@ aside {
 
 .flag {
   margin-left: 10px;
+}
+
+h2  {
+  .form-row {
+    margin-top: 5px
+  }
 }
 
 // TODO remove unused code

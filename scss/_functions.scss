@@ -1,12 +1,12 @@
 @import "variables";
 
-@mixin center($x, $y){
+@mixin center($x, $y) {
   left: $x;
   top: $y;
   transform: translate($x * -1, $y * -1);
 }
 
-@mixin circle($sizeY, $sizeX: $sizeY){
+@mixin circle($sizeY, $sizeX: $sizeY) {
   width: $sizeX;
   height: $sizeY;
   line-height: $sizeY;
@@ -25,4 +25,9 @@
 
     $levelSelector: $levelSelector+1;
   }
+}
+
+@mixin wh($size) {
+  height: $size;
+  width: $size;
 }

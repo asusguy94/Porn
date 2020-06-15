@@ -1,8 +1,8 @@
 <?php
-include('_class.php');
-$basic = new Basic();
-$video = new Video();
-global $pdo;
+	include('_class.php');
+	$basic = new Basic();
+	$video = new Video();
+	global $pdo;
 ?>
 
 <!doctype html>
@@ -19,6 +19,13 @@ global $pdo;
         <main class="container-fluid">
             <div class="row">
                 <aside class="col-2">
+                    <div id="update" class="col btn btn-outline-primary d-none">Update Data</div>
+
+                    <div class="input-wrapper" data-toggle="tooltip" data-placement="right" title="Exclude from Name">
+                        <input type="checkbox" name="exclude" data-toggle="switchbutton"
+                               data-onlabel="Exclude" data-offlabel="Include">
+                    </div>
+
                     <div class="input-wrapper">
                         <input type="text" name="star-name" placeholder="Aaliyah Hadid" autofocus>
                     </div>
@@ -64,123 +71,129 @@ global $pdo;
                         <label for="videocount_desc">Most Videos</label>
                     </div>
 
-                    <h2>Website</h2>
+                    <h2>Website/Sites</h2>
 					<?php
-					$query = $pdo->prepare("SELECT websites.name FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");
-					$query->execute();
-					if ($query->rowCount()) {
-						print '<div id="websites">';
-						print '<select class="pretty">';
-						print '<option name="website_All">All</option>';
-						foreach ($query->fetchAll() as $data) {
-							print "<option name='website_$data[name]' value='$data[name]'>$data[name]</option>";
+						$query = $pdo->prepare("SELECT websites.name, websites.id FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");
+						$query->execute();
+
+						if ($query->rowCount()) {
+							print '<div id="websites">';
+							print '<select class="pretty">';
+							print '<option>All</option>';
+							foreach ($query->fetchAll() as $wsite) {
+								print sprintf("<option data-wsite='%s'>$wsite[name]</option>", Basic::encode($wsite['name']));
+								foreach (Website::getSites($wsite['id']) as $site) {
+									print sprintf("<option data-wsite='%s' data-site='%s'>$wsite[name]_$site[name]</option>", Basic::encode($wsite['name']), Basic::encode($site['name']));
+								}
+							}
+							print '</select>';
+							print '</div>';
 						}
-						print '</select>';
-						print '</div>';
-					}
 					?>
 
-                    <h2>!Website</h2>
-					<?php
-					$query = $pdo->prepare("SELECT websites.name FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");
-					$query->execute();
-					if ($query->rowCount()) {
-						print '<div id="websites-not">';
-						print '<select class="pretty">';
-						print '<option name="website_All">All</option>';
-						foreach ($query->fetchAll() as $data) {
-							print "<option name='website_$data[name]' value='$data[name]'>$data[name]</option>";
-						}
-						print '</select>';
-						print '</div>';
-					}
-					?>
+                    <h2>Exclude Website</h2>
+	                <?php
+		                $query = $pdo->prepare("SELECT websites.name, websites.id FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");
+		                $query->execute();
+
+		                if ($query->rowCount()) {
+			                print '<div id="websites_exclude">';
+			                print '<select class="pretty">';
+			                print '<option>None</option>';
+			                foreach ($query->fetchAll() as $wsite) {
+				                print sprintf("<option data-wsite='%s'>$wsite[name]</option>", Basic::encode($wsite['name']));
+			                }
+			                print '</select>';
+			                print '</div>';
+		                }
+	                ?>
 
                     <h2>Country</h2>
 					<?php
-					$query = $pdo->prepare("SELECT country.name, country.code FROM country JOIN stars ON country.name = stars.country GROUP BY country.name ORDER BY country.name");
-					$query->execute();
-					if ($query->rowCount()) {
-						print '<div id="countries">';
-						print '<select class="pretty">';
-						print '<option name="country_All">All</option>';
-						foreach ($query->fetchAll() as $data) {
-							print "<option name='country_$data[name]' value='$data[name]' data-prefix='<span class=\"flag flag-$data[code]\"></span>'>$data[name]</option>";
+						$query = $pdo->prepare("SELECT country.name, country.code FROM country JOIN stars ON country.name = stars.country GROUP BY country.name ORDER BY country.name");
+						$query->execute();
+						if ($query->rowCount()) {
+							print '<div id="countries">';
+							print '<select class="pretty">';
+							print '<option name="country_All">All</option>';
+							foreach ($query->fetchAll() as $data) {
+								print "<option name='country_$data[name]' value='$data[name]' data-prefix='<span class=\"flag flag-$data[code]\"></span>'>$data[name]</option>";
+							}
+							print '</select>';
+							print '</div>';
 						}
-						print '</select>';
-						print '</div>';
-					}
 					?>
 
                     <h2>Breast</h2>
 					<?php
-					$query = $pdo->prepare("SELECT breast FROM stars WHERE breast IS NOT NULL GROUP BY breast ORDER BY breast='AA' DESC, breast");
-					$query->execute();
-					if ($query->rowCount()) {
-						print '<div id="breasts">';
+						$query = $pdo->prepare("SELECT breast FROM stars WHERE breast IS NOT NULL GROUP BY breast ORDER BY breast='AA' DESC, breast");
+						$query->execute();
+						if ($query->rowCount()) {
+							print '<div id="breasts">';
 
-						print '<div class="input-wrapper">';
-						print '<input type="radio" name="breast">';
-						print '<label>NULL</label>';
-						print '</div>';
-
-						foreach ($query->fetchAll() as $data) {
 							print '<div class="input-wrapper">';
 							print '<input type="radio" name="breast">';
-							print "<label>$data[breast]</label>";
+							print '<label>NULL</label>';
+							print '</div>';
+
+							foreach ($query->fetchAll() as $data) {
+								print '<div class="input-wrapper">';
+								print '<input type="radio" name="breast">';
+								print "<label>$data[breast]</label>";
+								print '</div>';
+							}
 							print '</div>';
 						}
-						print '</div>';
-					}
 					?>
 
                     <h2>Hair Color</h2>
 					<?php
-					$query = $pdo->prepare("SELECT haircolor FROM stars WHERE haircolor IS NOT NULL GROUP BY haircolor");
-					$query->execute();
-					if ($query->rowCount()) {
-						print '<div id="hair">';
+						$query = $pdo->prepare("SELECT haircolor FROM stars WHERE haircolor IS NOT NULL GROUP BY haircolor");
+						$query->execute();
+						if ($query->rowCount()) {
+							print '<div id="hair">';
 
-						print '<div class="input-wrapper">';
-						print '<input type="radio" name="hair">';
-						print '<label>NULL</label>';
-						print '</div>';
-
-						foreach ($query->fetchAll() as $data) {
 							print '<div class="input-wrapper">';
 							print '<input type="radio" name="hair">';
-							print "<label>$data[haircolor]</label>";
+							print '<label>NULL</label>';
+							print '</div>';
+
+							foreach ($query->fetchAll() as $data) {
+								print '<div class="input-wrapper">';
+								print '<input type="radio" name="hair">';
+								print "<label>$data[haircolor]</label>";
+								print '</div>';
+							}
 							print '</div>';
 						}
-						print '</div>';
-					}
 					?>
 
                     <h2>Ethnicity</h2>
 					<?php
-					$query = $pdo->prepare("SELECT ethnicity FROM stars WHERE ethnicity IS NOT NULL GROUP BY ethnicity");
-					$query->execute();
-					if ($query->rowCount()) {
-						print '<div id="ethnicity">';
+						$query = $pdo->prepare("SELECT ethnicity FROM stars WHERE ethnicity IS NOT NULL GROUP BY ethnicity");
+						$query->execute();
+						if ($query->rowCount()) {
+							print '<div id="ethnicity">';
 
-						print '<div class="input-wrapper">';
-						print '<input type="radio" name="ethnicity">';
-						print '<label>NULL</label>';
-						print '</div>';
-
-						foreach ($query->fetchAll() as $data) {
 							print '<div class="input-wrapper">';
 							print '<input type="radio" name="ethnicity">';
-							print "<label>$data[ethnicity]</label>";
+							print '<label>NULL</label>';
+							print '</div>';
+
+							foreach ($query->fetchAll() as $data) {
+								print '<div class="input-wrapper">';
+								print '<input type="radio" name="ethnicity">';
+								print "<label>$data[ethnicity]</label>";
+								print '</div>';
+							}
 							print '</div>';
 						}
-						print '</div>';
-					}
 					?>
                 </aside>
 
                 <section id="stars" class="col-10">
-                    <div id="loader"></div>
+                    <h2 class="text-center"><span id="video-count">0</span> Stars</h2>
+                    <div id="loader" class="spinner-border text-primary"></div>
                 </section>
             </div>
         </main>

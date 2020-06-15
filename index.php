@@ -1,13 +1,13 @@
 <?php
-include('_class.php');
-$basic = new Basic();
-$home = new HomePage();
+	include('_class.php');
+	$basic = new Basic();
+	$home = new HomePage();
 ?>
 
 <!doctype html>
 <html>
     <head>
-		<?php $basic->head('Home', array('bootstrap'), array('lazyload', 'home')) ?>
+		<?php $basic->head('Home', ['bootstrap'], ['lazyload', 'home']) ?>
     </head>
 
     <body>
@@ -17,33 +17,33 @@ $home = new HomePage();
 
         <main class="container-fluid">
             <section class="row">
-				<?php $home->count = 8 ?>
+				<?php $home->count = 10 ?>
 				<?php if ($home->count) { ?>
-                    <div class="col-12">
+                    <div class="col-12 mb-1">
                         <h2>Recent Added Videos (<span class="count"><?= $home->count ?></span>)</h2>
 						<?php $home->recent() ?>
                     </div>
 				<?php } ?>
 
-				<?php $home->count = 8 ?>
+				<?php $home->count = 10 ?>
 				<?php if ($home->count) { ?>
-                    <div class="col-12">
+                    <div class="col-12 mb-1">
                         <h2>Newest Videos (<span class="count"><?= $home->count ?></span>)</h2>
 						<?php $home->newest() ?>
                     </div>
 				<?php } ?>
 
-				<?php $home->count = 0 ?>
-				<?php if ($home->count) { ?>
-                    <div class="col-12">
+                <?php $home->count = 0 ?>
+                <?php if ($home->count) { ?>
+                    <div class="col-12 mb-1">
                         <h2>Random Videos (<span class="count"><?= $home->count ?></span>)</h2>
-						<?php $home->random() ?>
+                        <?php $home->random() ?>
                     </div>
-				<?php } ?>
+                <?php } ?>
 
-				<?php $home->count = 8 ?>
+				<?php $home->count = 20 ?>
 				<?php if ($home->count) { ?>
-                    <div class="col-12">
+                    <div class="col-12 mb-1">
                         <h2>Popular Videos (<span class="count"><?= $home->count ?></span>)</h2>
 						<?php $home->popular() ?>
                     </div>

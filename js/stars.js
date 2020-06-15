@@ -1,23 +1,35 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const AUTO = new URL(location.href).searchParams.get('auto');
-    const autoBtn = document.getElementsByName('auto')[0];
+        const urlObj = new URL(location.href).searchParams
+        const AUTO = urlObj.get('auto')
+        const autoBtn = document.getElementsByName('auto')[0]
 
-    const inputField = document.querySelector('input[name="star"]');
-    const inputText = document.querySelectorAll('p.missing .name');
+        const inputField = document.querySelector('input[name="star"]')
+        const inputText = document.querySelectorAll('p.missing .name')
 
-    if (inputText.length) {
-        inputField.value = inputText[0].textContent;
-        if (AUTO === '1') $('input[name="addStar"]')[0].click();
-    } else if (AUTO === '1') {
-        resetUrl();
+        if (inputText.length) {
+            let data = inputText[0].textContent
+
+            inputField.value = data
+            if (AUTO === '1') {
+                if (localStorage.current !== data) {
+                    localStorage.current = data
+                    $('input[name="addStar"]')[0].click()
+                } else {
+                    resetUrl()
+                }
+            }
+        } else if (AUTO === '1') {
+            resetUrl()
+        }
+
+        autoBtn.addEventListener('change', function () {
+            if (this.checked) location.href = '?auto=1'
+            else resetUrl()
+        })
     }
-
-    autoBtn.addEventListener('change', function () {
-        if (this.checked) location.href = '?auto=1';
-        else resetUrl();
-    });
-});
+)
 
 function resetUrl() {
-    location.href = location.pathname;
+    localStorage.removeItem('current')
+    location.href = location.pathname
 }

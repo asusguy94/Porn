@@ -165,6 +165,25 @@ form[autocomplete] {
   }
 }
 
+canvas {
+  display: none;
+  position: fixed;
+
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #eeeeee;
+
+  &.active {
+    display: block;
+    z-index: 1;
+  }
+}
+
+.hidden-controls {
+  display: none !important;
+}
+
 /* FIXES */
 @import 'plyr';
 
@@ -189,3 +208,35 @@ form[autocomplete] {
 }
 
 // TODO remove unused code
+
+#related_wrapper {
+  text-align: center;
+
+  .related {
+    display: inline-block;
+
+    &_zero {
+      color: red;
+    }
+
+    &__item {
+      width: 50%;
+      float: left;
+      padding: 0 4px;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+
+      &:nth-child(odd) {
+        padding-left: 2px;
+      }
+
+      &:nth-child(even) {
+        padding-right: 2px;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
