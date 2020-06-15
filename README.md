@@ -1,8 +1,8 @@
 # Welcome
 ## What is this app
 It is an app to organize all your video files.
-- When an import is started the program imports all your files within the videos folder ie: all files within `videos/somesite and videos/someothersite`
-  - If a folder has an underscore in the name, it will ignore that folder ie: `videos/somesite will be imported, videos/some_other_site will not be imported`
+- When an import is started the program imports all your files within the videos folder ie: all files within `videos/somesite` and `videos/someothersite`
+  - If a folder has an underscore in the name, it will ignore that folder ie: `videos/somesite` will be imported, `videos/some_other_site` will not be imported
 - If the star has already been added, the star will be added to that video, otherwise you can add a star manually and then all the relevant videos will be added to that star
 - When a video is imported, it will automatically set the date of that video, if the supplied date was incorrect, you can rename the video (from the app) and refresh the date
 
@@ -44,6 +44,9 @@ It is an app to organize all your video files.
 6. Type `gulp` to compile the necessary files
 
 ### Initialize Database & edit _class.php
+If you want to skip most of these steps, you can set the password for my app to the root-username and root password,
+usually `root` and ` `. Then you can continue on `step 3 - Creating a database`
+
 This app requires a database to function properly, I recomend using [phpMyAdmin](https://www.phpmyadmin.net)
 1. **Login to the administration console of your database management of choice**
 	- You can usually use `root` for username and ` ` (no character) for password
@@ -93,11 +96,6 @@ This app depends on values of the settings table, so choosing not to initialize 
 2. Make any initial changes (OPTIONAL)
 3. Scroll to the bottom and click on the Save-button
 
-## Upgrade dependencies
-If you have been using this project for a while, after some time the dependencies might become outdated
-1. Open the terminal of choice and CD into your working project eg `CD C:/downloads/porn-organizer`
-2. Type `npm update` to refresh the dependencies
-
 Usually doing this is not necessary, but if you've updated the project from a new commit you should always run the following commands
 ```
 npm install
@@ -109,4 +107,4 @@ This will install any new packages added to the project & update any existing pa
 - [ ] Implement Bootstrap 4
 - [ ] Video-page bookmark-visuals are broken on smaller devices
 - [x] Upload .SQL file for project
-- [ ] Display indicator on search page for various counts
+- [x] Display indicator on search page for various counts
