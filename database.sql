@@ -32,73 +32,10 @@ CREATE TABLE `country` (
                            `code` char(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-INSERT INTO `country` (`id`, `name`, `code`) VALUES
-(1, 'Argentina', 'ar'),
-(2, 'Australia', 'au'),
-(3, 'Austria', 'at'),
-(4, 'Belgium', 'be'),
-(5, 'Brazil', 'br'),
-(6, 'Bulgaria', 'bg'),
-(7, 'Canada', 'ca'),
-(8, 'Chile', 'cl'),
-(9, 'Colombia', 'co'),
-(10, 'Cuba', 'cu'),
-(11, 'Czech Republic', 'cz'),
-(12, 'France', 'fr'),
-(13, 'Germany', 'de'),
-(14, 'Greece', 'gr'),
-(15, 'Hungary', 'hu'),
-(16, 'India', 'in'),
-(17, 'Iran', 'ir'),
-(18, 'Israel', 'il'),
-(19, 'Italy', 'it'),
-(20, 'Japan', 'jp'),
-(21, 'Lebanon', 'lb'),
-(22, 'Libyan Arab Jamahiriya', 'ly'),
-(23, 'Mexico', 'mx'),
-(24, 'Moldova, Republic Of', 'md'),
-(25, 'Netherlands', 'an'),
-(26, 'Philippines', 'ph'),
-(27, 'Portugal', 'pt'),
-(28, 'Puerto Rico', 'pr'),
-(29, 'Romania', 'ro'),
-(30, 'Russia', 'ru'),
-(31, 'Serbia', 'rs'),
-(32, 'Slovakia', 'sk'),
-(33, 'South Korea', 'kr'),
-(34, 'Spain', 'es'),
-(35, 'Sweden', 'se'),
-(36, 'Thailand', 'th'),
-(37, 'Ukraine', 'ua'),
-(38, 'United Kingdom', 'gb'),
-(39, 'United States', 'us'),
-(40, 'Uruguay', 'uy'),
-(41, 'Venezuela', 've'),
-(42, 'Vietnam', 'vn'),
-(43, 'Peru', 'pe'),
-(44, 'Switzerland', 'ch'),
-(45, 'Poland', 'pl'),
-(46, 'Kenya', 'ke'),
-(50, 'South Africa', 'za'),
-(51, 'Latvia', 'lv'),
-(52, 'Cameroon', 'cm'),
-(53, 'Belarus', 'by'),
-(54, 'Jamaica', 'jm'),
-(55, 'Uzbekistan', 'uz'),
-(56, 'Turkey', 'tr'),
-(57, 'Finland', 'fi'),
-(58, 'Lithuania', 'lt'),
-(59, 'Dominican Republic', 'do'),
-(60, 'Bermuda', 'bm'),
-(61, 'Guyana', 'gy'),
-(62, 'Virgin Islands (U.S.)', 'vi'),
-(63, 'Turkmenistan', 'tm'),
-(64, 'China', 'cn');
-
 CREATE TABLE `locations` (
                              `id` int(11) NOT NULL,
                              `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 CREATE TABLE `plays` (
                          `id` int(11) NOT NULL,
@@ -120,10 +57,11 @@ CREATE TABLE `settings` (
                             `enable_mkv` tinyint(1) NOT NULL DEFAULT 0,
                             `enable_fa` tinyint(1) NOT NULL DEFAULT 0,
                             `video_sql` varchar(255) DEFAULT NULL,
+                            `enable_dash` tinyint(1) NOT NULL DEFAULT 0,
                             `enable_hls` tinyint(1) NOT NULL DEFAULT 0,
                             `enable_https` tinyint(1) NOT NULL DEFAULT 0,
                             `script_reload` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 CREATE TABLE `sites` (
                          `id` int(11) NOT NULL,
@@ -177,6 +115,7 @@ CREATE TABLE `videos` (
                           `name` varchar(255) NOT NULL,
                           `path` varchar(255) NOT NULL,
                           `date` date DEFAULT NULL,
+                          `added` datetime NOT NULL DEFAULT current_timestamp(),
                           `duration` int(11) NOT NULL DEFAULT 0,
                           `starAge` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -209,7 +148,6 @@ CREATE TABLE `websitesites` (
                                 `websiteID` int(11) NOT NULL,
                                 `siteID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 ALTER TABLE `attributes`
     ADD PRIMARY KEY (`id`),
@@ -289,7 +227,8 @@ ALTER TABLE `videos`
     ADD KEY `name` (`name`),
     ADD KEY `date` (`date`),
     ADD KEY `duration` (`duration`),
-    ADD KEY `starAge` (`starAge`);
+    ADD KEY `starAge` (`starAge`),
+    ADD KEY `added` (`added`);
 
 ALTER TABLE `videosites`
     ADD PRIMARY KEY (`id`),
@@ -315,7 +254,6 @@ ALTER TABLE `websitesites`
     ADD UNIQUE KEY `siteID` (`siteID`) USING BTREE,
     ADD KEY `websiteID` (`websiteID`);
 
-
 ALTER TABLE `attributes`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
@@ -326,7 +264,7 @@ ALTER TABLE `categories`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `country`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `locations`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
