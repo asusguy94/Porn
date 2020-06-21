@@ -1785,24 +1785,6 @@
                 $query->execute();
             };
             
-            /*$addAlias = function ($aliasName) {
-                global $pdo, $id;
-                $query = $pdo->prepare("SELECT id FROM staralias WHERE name = ? LIMIT 1");
-                $query->bindValue(1, $aliasName);
-                $query->execute();
-                if (!$query->rowCount()) {
-                    $query = $pdo->prepare("SELECT id FROM stars WHERE name = ? LIMIT 1");
-                    $query->bindValue(1, $aliasName);
-                    $query->execute();
-                    if (!$query->rowCount()) {
-                        $query = $pdo->prepare("INSERT INTO staralias(starID, name) VALUES(:starID, :aliasName)");
-                        $query->bindParam(':starID', $id);
-                        $query->bindParam(':aliasName', $aliasName);
-                        $query->execute();
-                    }
-                }
-            };*/
-            
             global $pdo;
             $query = $pdo->prepare("SELECT * FROM stars WHERE id = ? LIMIT 1");
             $query->bindValue(1, $id);
@@ -1813,12 +1795,11 @@
             $base = file_get_contents($url);
             
             $searchElement = explode(' teaser ', $base)[1];
-            $searchItem = explode('" class=', explode('<a href="/', $searchElement)[1])[0];
+            $searchItem_name = explode('" class=', explode('<a href="/', $searchElement)[1])[0];
             
-            $searchItem_name = trim(explode('"', explode('title="', $searchElement)[1])[0]);
-            if (strtolower($searchItem_name) !== strtolower($star['name'])) return;
+            if (strtolower($searchItem_name) !== strtolower(preg_replace('/\s/', '-', $star['name']))) return;
             
-            $starLink = "https://www.freeones.com/$searchItem/profile";
+            $starLink = "https://www.freeones.com/$searchItem_name/profile";
             $bio = file_get_contents($starLink);
             
             $selector = function ($test, $ref) {
@@ -1830,7 +1811,7 @@
             };
             
             $filterNumbers = function ($str) {
-                return preg_replace('/[0-9]/', '', $str);
+                return preg_replace('/\d/', '', $str);
             };
             
             $ethnicity = $selector("link_span_ethnicity", $bio);
@@ -1846,7 +1827,7 @@
             
             $year_start = $selectorChild('timeline-horizontal', $bio, 2);
             $year_end = $selectorChild('timeline-horizontal', $bio, 10);
-            if ($year_end == date('y')) $year_end = '';
+            if ($year_end == date('y') || $year_end === 'Now') $year_end = '';
             
             $date_class = new Date();
             if (is_null($star['breast']) && strlen($breast)) {
