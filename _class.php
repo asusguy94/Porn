@@ -1494,7 +1494,7 @@
                     $fullPathWebm = "$cdnPrefix$_SERVER[HTTP_HOST]/$localPathWebm";
                     $fullPathMkv = "$cdnPrefix$_SERVER[HTTP_HOST]/$localPathMkv";
                     
-                    $localPath_img = sprintf("images/videos/$data[id]-%s", THUMBNAIL_RES);
+                    $localPath_img = sprintf("images/videos/$data[id]-%s.jpg", THUMBNAIL_RES);
                     $fullPath_img = "$cdnPrefix$_SERVER[HTTP_HOST]/$localPath_img";
                     
                     print sprintf("<a class='video card ribbon-container' href='video.php?id=$data[id]' style='width:%spx'>", THUMBNAIL_RES);
