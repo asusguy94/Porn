@@ -16,9 +16,10 @@ It is an app to organize all your video files.
 - This project is loosely based on a windows app called [Pornganizer](https://pornganizer.org)
   - This project uses some of the functionality similar to that program, but with a lot of folder/file automation.
 - I also have another version of this project for a hentai-version of this organizer, if that is something that anyone wants to use as well, I can upload that too.
-- Any help is appreciated...also with GitHub, as I'm quite new to the platform
 
 ## Requirements
+- **FFMPEG** & **FFPROBE**, put the executables on the server (or on your computer if you're running a local server)
+  - insert path's into ```_class.php``` (search for `class FFMPEG` and you should find both of them)
 - Server
   - **Linux**: LAMP
   - **WindowsXP**: XAMP
