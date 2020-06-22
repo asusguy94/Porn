@@ -1,7 +1,7 @@
 node_modules
 *.min.*
+.idea
 package-lock.json
-.*
 *test.php
 *.lock
 *.log
