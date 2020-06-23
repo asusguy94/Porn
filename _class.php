@@ -1,5 +1,4 @@
 <?php
-    
     define('DB', 'porn'); // SQL database name
     define('DB_PORT', 3307); // 3307_mariaDB - 3306_mySQL
     define('DB_STR', sprintf("mysql:host=127.0.0.1:%d;dbname=%s", DB_PORT, DB));
@@ -2572,16 +2571,25 @@
     class FFMPEG
     {
         /* SYNOLOGY */
-        public $ffprobe = '/volume1/@appstore/ffmpeg/bin/ffprobe';
-        public $ffmpeg = '/volume1/@appstore/ffmpeg/bin/ffmpeg';
+        public $ffprobe = '/volume1/@appstore/ffmpeg/bin/ffprobe'; // Replace this with your own path eg, 'C:/ffmpeg/ffprobe'
+        public $ffmpeg = '/volume1/@appstore/ffmpeg/bin/ffmpeg'; // Replace this with your own path eg, 'C:/ffmpeg/ffmpeg'
         
-        /* TRANSCODER */
-        /*public $ffprobe = 'C:/ffmpeg/ffprobe';
-        public $ffmpeg = 'C:/ffmpeg/ffmpeg';*/
+        public $os = 'linux'; // linux | windows
         
         function getDuration($fname)
         {
-            $duration = shell_exec("$this->ffprobe -i \"videos/$fname\" 2>&1 | grep Duration | awk '{print $2}' | tr -d ,");
+            switch ($this->os) {
+                case 'linux':
+                    $duration = shell_exec("$this->ffprobe -i \"videos/$fname\" 2>&1 | grep Duration | awk '{print $2}' | tr -d ,");
+                    break;
+                case 'windows':
+                    $duration = shell_exec("$this->ffprobe -i \"videos/$fname\" 2>&1");
+                    $duration = explode(", ", explode("Duration: ", $duration)[1])[0];
+                    break;
+                default:
+                    return false;
+            }
+            
             
             if (!is_null($duration)) {
                 $hours = intval(explode(':', $duration)[0]);

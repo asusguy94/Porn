@@ -20,6 +20,9 @@ It is an app to organize all your video files.
 ## Requirements
 - **FFMPEG** & **FFPROBE**, put the executables on the server (or on your computer if you're running a local server)
   - insert path's into ```_class.php``` (search for `class FFMPEG` and you should find both of them)
+  - Linux & Windows support, set `$os = windows` or `$os = linux` under `class FFMPEG` enable
+- **IMAGEMAGIC**, is not a hard requirement...but omiting this will disable timeline-thumbnails
+  - insert path's as above, but this time under `class VTT` 
 - Server
   - **Linux**: LAMP
   - **WindowsXP**: XAMP
