@@ -113,6 +113,16 @@
                         <label for="site_desc">Site Z-A</label>
                     </div>
 
+                    <div class="input-wrapper">
+                        <input id="plays_desc" type="radio" name="sort">
+                        <label for="plays_desc">Most Popular</label>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <input id="plays" type="radio" name="sort">
+                        <label for="plays">Least Popular</label>
+                    </div>
+
                     <h2>Website/Sites</h2>
 					<?php
 						$query = $pdo->prepare("SELECT websites.name, websites.id FROM websites JOIN videowebsites ON websites.id = videowebsites.websiteID GROUP BY name ORDER BY name");

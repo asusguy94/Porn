@@ -1,6 +1,6 @@
 <?php
     include('../_class.php');
-
+    
     global $pdo;
     $sql = "
             SELECT videos.id AS videoID, videos.starAge, videos.path, videos.name AS videoName,
@@ -26,11 +26,11 @@
                 	LEFT JOIN locations ON videolocations.locationID = locations.id
             	ORDER BY videos.name, videos.path
           ";
-
+    
     $query = $pdo->prepare($sql);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_OBJ);
-
+    
     print '{';
     print '"videos": [';
     for ($i = 0, $len = count($result), $category_arr = [], $attribute_arr = [], $location_arr = []; $i < $len; $i++) {
@@ -43,30 +43,30 @@
         $siteName = $result[$i]->siteName;
         $ageInVideo = $result[$i]->ageinvideo;
         $ageInVideo_alt = $result[$i]->starAge;
-
+        
         if (!$ageInVideo) {
             if (!is_null($ageInVideo_alt)) $ageInVideo = $ageInVideo_alt * 365;
             else $ageInVideo = 0;
         }
-
+        
         /* Array */
         $categoryName = $result[$i]->categoryName;
         $attributeName = $result[$i]->attributeName;
         $locationName = $result[$i]->locationName;
-
-
+        
+        
         /* Duplicate Check */
         $videoPath = $result[$i]->path;
         $nextIsDuplicate = ($i < $len - 1 && ($result[$i + 1]->path == $videoPath));
         $prevIsDuplicate = ($i > 0 && ($result[$i - 1]->path == $videoPath));
-
-
+        
+        
         if (!$prevIsDuplicate) { // first video of the bunch
             print '{';
-
+            
             $thumbnail = "../images/videos/$videoID-" . THUMBNAIL_RES . ".jpg";
             $video = "../videos/$videoPath";
-
+            
             print "\"videoID\": $videoID,";
             print "\"videoName\": \"" . str_replace('"', '\\"', $videoName) . "\",";
             print "\"videoDate\": \"$videoDate\",";
@@ -76,7 +76,7 @@
             print "\"siteName\": \"$siteName\",";
             print "\"ageInVideo\": \"$ageInVideo\",";
             print "\"thumbnail\": \"$thumbnail\",";
-
+            print "\"plays\": \"" . getPlays($videoID) . "\",";
             print '"existing": "1",';
         }
 
@@ -129,13 +129,42 @@
 
             if ($i < $len - 1) print '},';
             else print '}';
-
+            
             // RESETS
             $category_arr = [];
             $attribute_arr = [];
             $location_arr = [];
         }
     }
-
+    
     print ']';
     print '}';
+    
+    function initArray(&$arr, $item)
+    {
+        if (!is_null($item)) {
+            if (!in_array($item, $arr)) array_push($arr, $item);
+        }
+    }
+    
+    function handleArray($label, $arr, $last = false)
+    {
+        print '"' . $label . '": [';
+        if (count($arr)) {
+            for ($j = 0; $j < count($arr); $j++) {
+                print "\"$arr[$j]\"";
+                if ($j < count($arr) - 1) print ',';
+            }
+        }
+        print ']';
+        if (!$last) print ',';
+    }
+    
+    function getPlays($id)
+    {
+        global $pdo;
+        $query = $pdo->prepare("SELECT COUNT(*) AS total FROM plays WHERE videoID = :videoID");
+        $query->bindParam(':videoID', $id);
+        $query->execute();
+        return $query->fetch()['total'];
+    }
