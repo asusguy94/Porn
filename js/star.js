@@ -1,37 +1,34 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const title = document.getElementById('star-name')
+const title = document.getElementById('star-name')
 
-    window.starName = document.getElementById('star-name').textContent
-    window.starID = window.location.href.split('id=')[1]
-    window.video = document.getElementsByTagName('video')
-    window.startTime = 40
+const starName = document.getElementById('star-name').textContent
+const starID = window.location.href.split('id=')[1]
+const video = document.getElementsByTagName('video')
+const startTime = 40
 
-    dropbox()
-    autoComplete()
+dropbox()
+autoComplete()
 
-    let form = document.getElementsByTagName('form')
-    for (let i = 0; i < form.length; i++) {
-        form[i].addEventListener('keydown', function (e) {
-            switch (e.keyCode) {
-                case 13: // enter
-                    $(form).eq(i).submit()
-                    break
-                case 9: // tab
-                    e.preventDefault()
+let form = document.getElementsByTagName('form')
+for (let i = 0; i < form.length; i++) {
+    form[i].addEventListener('keydown', function (e) {
+        switch (e.keyCode) {
+            case 13: // enter
+                $(form).eq(i).submit()
+                break
+            case 9: // tab
+                e.preventDefault()
 
-                    if (i < form.length - 1) $(form).eq(i + 1).find("input")[0].focus()
-                    else $("#next")[0].click()
-            }
-        })
-    }
+                if (i < form.length - 1) $(form).eq(i + 1).find("input")[0].focus()
+                else $("#next")[0].click()
+        }
+    })
+}
 
-    setFocus()
-    videoHover()
+setFocus()
+videoHover()
 
-    if (isIgnored()) title.classList.add('ignored')
-    if ($(".ribbon-green").length === 1) document.getElementById('alert-container').classList.remove('d-none')
-
-})
+if (isIgnored()) title.classList.add('ignored')
+if ($(".ribbon-green").length === 1) document.getElementById('alert-container').classList.remove('d-none')
 
 function isIgnored() {
     return ($('h2 > #star-name[data-star-ignore]').attr('data-star-ignore') === '1')
