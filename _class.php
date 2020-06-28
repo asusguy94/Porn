@@ -1794,7 +1794,7 @@
             $base = file_get_contents($url);
             
             $searchElement = explode(' teaser ', $base)[1];
-            $searchItem_name = explode('" class=', explode('<a href="/', $searchElement)[1])[0];
+            $searchItem_name = explode('/', explode('"', explode('<a href="/', $searchElement)[1])[0])[0];
             
             if (strtolower($searchItem_name) !== strtolower(preg_replace('/\s/', '-', $star['name']))) return;
             
