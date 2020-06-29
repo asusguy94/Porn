@@ -1845,7 +1845,7 @@
                 $saveProp('country', $country);
                 
                 // COUNTRY_code
-                $country_code = explode('"', explode('flag-icon-', $bio)[1])[0];
+                $country_code = explode('"', explode('flag-icon-', $bio)[2])[0];
                 $query = $pdo->prepare("SELECT id FROM country WHERE name = ? AND code = ? LIMIT 1");
                 $query->bindValue(1, $country);
                 $query->bindValue(2, $country_code);
