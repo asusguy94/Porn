@@ -505,6 +505,12 @@ function videoHover() {
     }
 
     function startThumbnailPlayback(index) {
+        let videoSource = video[index].getElementsByTagName('source')[0]
+        if (videoSource.getAttribute('data-src')) {
+            videoSource.setAttribute('src', videoSource.getAttribute('data-src'))
+            video[index].load()
+        }
+
         let time = 120 // first thumbnail image
         let offset = 120 // next thumbnail images
         let duration = 1.5 // duration of preview (seconds)
@@ -523,6 +529,12 @@ function videoHover() {
     function stopThumbnailPlayback(index) {
         goToAndStop(index)
         clearInterval(thumbnail)
+
+        let videoSource = video[index].getElementsByTagName('source')[0]
+
+        videoSource.setAttribute('data-src', videoSource.getAttribute('src'))
+        $(videoSource).removeAttr('src')
+        video[index].load()
     }
 }
 
